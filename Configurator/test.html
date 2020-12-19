@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+            integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+            integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        
+
+        <style>
+            body {
+                background-color: rgb(255, 255, 255);
+            }
+            h1 {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.8em;
+                font-weight: 500;
+                line-height: 1.7em;
+                color: #ffffff;
+            }
+            h2 {
+                font-family:Verdana,sans-serif;
+                font-size: 0.8em;
+                font-weight: 500;
+                line-height: 1.2em;
+                color: #5e5e5e;
+            }
+            h3 {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 1.0em;
+                font-weight: 500;
+                line-height: 1.2em;
+                color: #ffffff;
+                padding-top: 275px;
+                padding-bottom: 50px;
+            }
+            p {
+                font-family:Verdana,sans-serif;
+                font-size: 0.75em;
+                font-weight: 500;
+                line-height: 1.5em;
+                margin-right: 25px;
+                text-align: justify;
+                color: #696969;
+            }
+            #sideInfo{
+                background-color: #1b1b1b;
+                color:rgb(255, 255, 255);
+                transition: all 0.3s;
+                position: fixed;
+                width: 300px;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                /* overflow-y: auto; */
+                z-index: 999;
+                padding-left: 20px;
+                padding-top: 50px;
+            }
+
+            .mainContent{
+                padding-left: 300px;
+                display: block;
+                /* height: 100vh; */
+                width: 100vw;
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 1900px;
+                display: flex;
+                /* float:right; */
+                padding-bottom: 25px;
+                padding-left: 50px;
+                padding-right: 50px;
+                padding-top: 25px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #SendCommand{
+                position: absolute;
+                bottom:0;
+                margin-bottom: 50px;
+                background-color: #1b1b1b;
+                border: 1px solid;
+                color: white;
+            }
+            hr {
+                display: block;
+                height: 1px;
+                border: 0;
+                border-top: 1px solid #ccc;
+                margin: 1em 0;
+                margin-right: 25px;
+            }
+
+        </style>
+
+
+        <script type="text/javascript" src="https://smtpjs.com/v3/smtp.js"> </script>
+        <script type="text/javascript" src="MarketingData.json"></script>
+
+        <script type="text/javascript">
+
+            var name = "custom_name";
+            var unitNumber = "custom_id";
+            var type = "custom_type";
+            var layout = "custom_layout";
+            var interior = "custom_interior";
+            var price = "custom_price";
+
+            var unit_area = "custom_unit_area"
+            var description = "custom_description"
+
+            function FillData(){
+
+                document.getElementById("unit_header").innerHTML = "RESIDENCE " + unitNumber;
+                document.getElementById("unit_area").innerHTML = unit_area;
+                document.getElementById("unit_type").innerHTML = "RBU: " + type;
+                document.getElementById("unit_layout").innerHTML = layout;
+                document.getElementById("unit_description").innerHTML = description;
+               // document.getElementById("unit_interior").innerHTML = "Interior: " + interior;
+               // document.getElementById("unit_price").innerHTML = "Total Price: " + price;
+            }
+
+
+            function SendEmail(){
+                console.log("email sent to HP")
+
+
+
+                Email.send({
+                    SecureToken : "7bc80f37-6400-44e4-8f24-1321aa03d452",
+                    To : 'zha.code.workshop@gmail.com',
+                    From : "zha.code.workshop@gmail.com",
+                    Subject : name + ", Placed an Order",
+                    Body : "<html><h2>Ikigai Beyabu</h2><br></br>\
+                            <p>Name: "+ name +"</p><br></br>\
+                            <p>Unit number: " + unitNumber +"</p><br></br>\
+                            <p>Unit type: " + type +"</p><br></br>\
+                            <p>Unit layout: " + layout +"</p><br></br>\
+                            <p>Unit interior: " + interior +"</p><br></br>\
+                            </html>"
+                }).then(
+                message => alert(message)
+                );
+
+                
+            }
+        </script>
+    </head>
+
+    <body onload="FillData()"> 
+        <div class="mainContent">
+
+            <div id="sideInfo">
+                <h1 >ROATAN BEYABU</h1>
+                <h2 >Honduras Prospera</h2> 
+                <h2 >Zaha Hadid Architects</h2> 
+
+                <h3 id="unit_header">RESIDENCE</h3> 
+                
+
+                <p id="unit_type"></p> 
+                <p id="unit_area"></p> 
+                <hr/>
+                <p id="unit_layout"></p>
+                <hr/>
+                <p id="unit_description"></p>
+                <!-- <p id="unit_interior"></p>
+                <p id="unit_price"></p> -->
+                <button id="SendCommand" type="button" class="btn btn-light" onclick="SendEmail()">Send Order</button>
+
+            </div>
+             <img class="image" src=custom_img alt = "image not here">
+             <img class="image" src=custom_int_render alt = "image not here">
+            <img class="image" src=custom_plan alt = "image not here"> 
+            <!-- <img id="image" src="https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/BaseRender.png?raw=true" alt = "image not here">
+            <img id="image" src="https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/InteriorRender.png?raw=true" alt = "image not here">
+            <img id="plan" src="https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/basePlan.png?raw=true" alt = "image not here"> -->
+
+        </div>
+        
+
+    </body>
+
+</html>

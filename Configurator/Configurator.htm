@@ -1,0 +1,521 @@
+﻿<!-- Copyright 1998-2019 Epic Games, Inc. All Rights Reserved. -->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+		integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+		integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="/player.css">
+
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+	<script type="text/javascript" src="/scripts/webRtcPlayer.js"></script>
+	<script type="text/javascript" src="/scripts/app.js"></script>
+	<script type="text/javascript" src="Configurator.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="./myChart.js"></script>
+
+	<link type="text/css" rel="stylesheet" href="Configurator.css">
+
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- For iPhone X the following makes it use the entire screen space for the webpage https://webkit.org/blog/7929/designing-websites-for-iphone-x/ -->
+	<meta name='viewport' content='initial-scale=1, viewport-fit=cover'>
+</head>
+
+<body onload="load(); onParagonLoad()">
+
+
+
+	<!-- Login Modal -->
+	<div id="LoginModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close customClose" onclick="HideLoginMenu()">&times;</span>
+
+			<div id="LoginSettings">
+				<!-- <div id="KickOthers">
+					<input type="button" id="kick-other-players-button" class="btn btn-light" value="Kick">
+				</div> -->
+				<img src="images/RoatanLife.jpg" class="picture" >
+
+				<div style=text-align:center>
+					<label class="login-text"><b>Username</b></label> <br>
+					<input id="login-text" class="login-text" type="text" placeholder="Enter Username" autocomplete="off" required> <br>
+					<label class="login-text"><b>Password</b></label> <br>
+					<input class="login-text" type="password" placeholder="Enter Password" required><br><br>
+					<button id="login-button" class="btn btn-light"
+						onclick="HideLoginMenu(); PlayGame()">Login</button>
+				</div>
+
+			</div>
+
+			
+
+			<div id="FillWindow">
+				<div class="settings-text">Enlarge Display to Fill Window</div>
+				<label class="tgl-switch">
+					<input type="checkbox" id="enlarge-display-to-fill-window-tgl" class="tgl tgl-flat" checked>
+					<div class="tgl-slider"></div>
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<!--Instructions Modal -->
+	<div id="InstructionsModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close customClose" onclick="HideInstructions()">&times;</span>
+
+			<div id="Instructions">
+
+				<img src="images/Instructions/1.jpg" id="instructionsImage" class = "picture">
+
+				<div style=text-align:center>
+					<div> 
+						<div class='inline-block-child'><button id="prevTutorial" class="btn btn-light" onclick="UpdateTutorialStep(-1)" disabled>Prev</button></div>
+						<div class='inline-block-child'><p id="tutorial">Scene Navigation Controls</p></div>
+  						<div class='inline-block-child'><button  id="nextTutorial" class="btn btn-light" onclick="UpdateTutorialStep(1)">Next</button></div>
+					</div>
+					
+					<br><br><br>
+					<button id="Skip-button" class="btn btn-light" onclick="DelayHideInstructions(); onLogin()">Skip Instructions</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Radar Modal -->
+		<div id = "RadarModal" class="modal">
+			<div id="RadarBox"  class="modal-content">
+				<span class = "close customClose"> &times; </span>
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+
+
+	<!-- Action Modal -->
+	<!--prev class=modal -->
+	<div id="ActionModal" class="modalMessageBox">
+
+		<!-- Modal content -->
+		<div id="MessageBox" class="modal-content-message">
+			<span class="close customClose" onclick="HideActionModal()">&times;</span>
+			<input type="text" name="ConfirmMessage" id="ConfirmMessage" value="" />
+			<br>
+			<div class="confirmButton">
+				<button id="accept-button" class="confirmButton btn btn-light"
+					onclick="onConfigButton('action','yes'); HideActionModal(); UpdateShoppingBar()">yes</button>
+				<button id="deny-button" class="confirmButton btn btn-light"
+					onclick="onConfigButton('action','no'); HideActionModal()">no</button>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	<div class="wrapper">
+		<!-- -------------------------- -->
+		<!-- Central window application -->
+
+		<div id="content" class="container-fluid">
+
+			<div class="row">
+				<div class="col">
+					<div id="player">
+
+						<div id="curtain" style="display:none"></div>
+
+						<div id="nav-bar" style="display:none">
+							
+							<ul>
+								<li>
+									<label>
+										<input type="radio"class="Sidebar-Icon" name="nav-bar" value="SelectSite" disabled="true"><img src="images/icons/select_site.png">
+									</label>
+								</li>
+								<li>
+									<label>
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectCluster" disabled="true"><img src="images/icons/select_cluster.png">
+									</label>
+								</li>
+								<li>
+									<label>
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectUnit" disabled="true"><img src="images/icons/select_unit.png">
+									</label>
+								</li>
+								<li>
+									<label>
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectLayout" disabled="true"><img src="images/icons/select_roomlayout.png">
+									</label>
+								</li>
+								<li>
+									<label>
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectFurniture" disabled="true"><img src="images/icons/SelectFurniture.png">
+									</label>
+								</li>
+								<li>
+									<label>
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="Review" disabled="true"><img src="images/icons/mode_summary.png">
+									</label>
+								</li>
+
+
+								<li>
+									<label>
+										<input type="image"  id="backButton" class="Sidebar-Icon" src="images/icons/back_icon.png" onclick="onConfigButton('undo',''); UndoSystem()" onmouseover="hoverImg(this);" onmouseout="unhoverImg(this);">
+									</label>
+								</li>
+							</ul>
+						</div>
+
+
+
+
+
+
+						<div id="sidebar" style="display:none">
+
+							<ul id="SelectCluster" class="panel-group" style="display:none">
+								<div id="p_cluster">
+									<li><label>
+										<input type="radio" class="selectType" name="cluster" value="rbu">
+										<img id="img_a_cluster" src="images/Cluster/rbu.png"
+											onclick="onConfigButton('cluster','rbu'); SetClusterType('rbu'); SetStats(src,'rbu')"><span class="large"><img src="images/misc/rbu.png" class="large-image" alt="Rbu"><br><p>Stack Houses</p></span>
+									</label>
+									</li>
+									<li><label>
+											<input type="radio" class="selectType" name="cluster" value="villa">
+											<img id="img_b_cluster" src="images/Cluster/villa.png"
+												onclick="onConfigButton('cluster','villa'); SetClusterType('villa'); SetStats(src,'villa')"><span class="large"><img src="images/misc/villa.png" class="large-image" alt="Rbu"><br><p>Villas</p></span>
+										</label>
+									</li>
+								</div>
+							</ul>
+
+
+
+
+							<ul id="SelectLevel" class="panel-group" style="display:none">
+								<div id="p_level">
+									<li><label>
+										<input type="radio" class="selectType" name="level" value="4">
+										<img id="img_a_level" src="images/icons/levels/4.png"
+											onclick="onConfigButton('level','4'); SetStats(src,'level 5')">
+									</label></li>
+
+									<li><label>
+										<input type="radio" class="selectType" name="level" value="3">
+										<img id="img_b_level" src="images/icons/levels/3.png"
+											onclick="onConfigButton('level','3'); SetStats(src,'level 4')">
+									</label></li>
+
+									<li><label>
+										<input type="radio" class="selectType" name="level" value="2">
+										<img id="img_c_level" src="images/icons/levels/2.png"
+											onclick="onConfigButton('level','2'); SetStats(src,'level 3')">
+									</label></li>
+
+									<li><label>
+										<input type="radio" class="selectType" name="level" value="1">
+										<img id="img_d_level" src="images/icons/levels/1.png"
+											onclick="onConfigButton('level','1'); SetStats(src,'level 2')">
+									</label></li>
+									<li><label>
+										<input type="radio" class="selectType" name="level" value="0">
+										<img id="img_e_level" src="images/icons/levels/0.png"
+											onclick="onConfigButton('level','0'); SetStats(src,'level 1')">
+									</label></li>
+								</div>
+							</ul>
+
+
+
+
+							<ul id="SelectUnit" class="panel-group" style="display:none">
+								<div id="p_unit">
+									<li><label>
+										<input type="radio" class="selectType" name="unit" value="base">
+										<img id="img_a_unit" src="images/icons/01_BaseUnit.png"
+											onclick="onConfigUnit('unit','0'); SetStats(src,'base')"><span class="large"><img id="img_a_unit_large" src="images/misc/base.png" class="large-image" alt="Rbu"><br><p>Base Unit<br>75 sqm</p></span>
+									</label>
+									</li>
+
+									<li><label>
+											<input type="radio" class="selectType" name="unit" value="tall">
+											<img id="img_b_unit" src="images/icons/02_TallUnit.png"
+												onclick="onConfigUnit('unit','1'); SetStats(src,'tall')"><span class="large"><img id="img_b_unit_large" src="images/misc/tall.png" class="large-image" alt="Rbu"><br><p>Tall Unit<br>150 sqm</p></span>
+										</label>
+									</li>
+
+									<li><label>
+											<input type="radio" class="selectType" name="unit" value="wide">
+											<img id="img_c_unit" src="images/icons/03_WideUnit.png"
+												onclick="onConfigUnit('unit','2'); SetStats(src,'wide')"><span class="large"><img id="img_c_unit_large" src="images/misc/wide.png" class="large-image" alt="Rbu"><br><p>Wide Unit<br>225 sqm</p></span>
+										</label>
+									</li>
+									<li><label>
+										<input type="radio" class="selectType" name="unit" value="double">
+										<img id="img_d_unit" src="images/icons/04_DoubleUnit.png"
+											onclick="onConfigUnit('unit','3'); SetStats(src,'side')"><span class="large"><img id="img_d_unit_large" src="images/misc/double.png" class="large-image" alt="Rbu"><br><p>Side Unit<br>150 sqm</p></span>
+									</label>
+								</li>
+								</div>
+							</ul>
+
+
+
+
+							<ul id="SelectLayout" class="panel-group" style="display:none">
+								<div id="p_layout">
+									<li><label>
+											<input type="radio" class="selectType" name="layout" value="layoutA">
+											<img id="img_a_layout" src="images/SpaceLayout/01_BaseUnit/layout1.png"
+												onclick="onConfigButton('layout','1'); SetStats(src, 'LayoutA')">
+										</label>
+									</li>
+
+									<li><label>
+											<input type="radio" class="selectType" name="layout" value="layoutB">
+											<img id="img_b_layout" src="images/SpaceLayout/01_BaseUnit/layout2.png"
+												onclick="onConfigButton('layout','2'); SetStats(src, 'LayoutB')">
+										</label>
+									</li>
+
+									<!-- <li><label>
+											<input type="radio" class="selectType" name="layout" value="layoutC">
+											<img id="img_c_layout" src="images/SpaceLayout/01_BaseUnit/layout3.png"
+												onclick="onConfigButton('layout','3'); SetStats(src, 'LayoutC')">
+										</label>
+									</li> -->
+								</div>
+							</ul>
+
+
+							<ul id="SelectAddOn1" class="panel-group" style="display:flex">
+
+
+								<div id="p_ag1">
+									<li><label>
+											<input type="radio" class="selectType" name="roof" value="Flat">
+											<img id="img_a_ag1" src="images/icons/palapa/flat.1.png"
+												onclick="onConfigButton('ag_roof','1'); SetStats(src, 'Flat')">
+										</label>
+									</li>
+									<li><label>
+										<input type="radio" class="selectType" name="roof" value="Palapa">
+										<img id="img_b_ag1" src="images/icons/palapa/palapa.1.png"
+											onclick="onConfigButton('ag_roof','2'); SetStats(src, 'Palapa')">
+									</label>
+								</li>
+								</div>
+							</ul>
+
+							<ul id="SelectAddOn2" class="panel-group" style="display:flex">
+								<div id="terrace_ag">
+									<li><label>
+											<input type="radio" class="selectType" name="terrace" value="Small Terrace">
+											<img id="img_a_ag2" src="images/icons/terrace/25_terrace.1.png"
+												onclick="onConfigButton('ag_terrace','1'); SetStats(src, 'Small Terrace')">
+										</label>
+									</li>
+									<li><label>
+											<input type="radio" class="selectType" name="terrace" value="Medium Terrace">
+											<img id="img_b_ag2" src="images/icons/terrace/50_terrace.1.png"
+												onclick="onConfigButton('ag_terrace','2'); SetStats(src, 'Medium Terrace')">
+										</label>
+									</li>
+									<li><label>
+										<input type="radio" class="selectType" name="terrace" value="Large Terrace">
+										<img id="img_c_ag2" src="images/icons/terrace/75_terrace.1.png"
+											onclick="onConfigButton('ag_terrace','3'); SetStats(src, 'Large Terrace')">
+									</label>
+								</li>
+								</div>
+							</ul>
+
+
+							
+							<ul id="SelectFurniture" class="panel-group" style="display:none">
+								<div id="p_furniture">
+									<li><label>
+										<input type="radio" class="selectType" name="unit" value="ZHA">
+										<img src="images/Furniture/furniture_style1.png"
+											onclick="onConfigButton('furniture','zaha'); SetStats(src, 'ZHA')">
+									</label>
+									</li>
+
+									<li><label>
+											<input type="radio" class="selectType" name="unit" value="Standard">
+											<img src="images/Furniture/furniture_style2.png"
+												onclick="onConfigButton('furniture','modern'); SetStats(src, 'Standard')">
+										</label>
+									</li>
+								</div>
+							</ul>
+						</div>
+
+
+
+
+
+						<div id="shopping-bar" style="display:none">
+							
+							<ul>
+								<label><li>
+									<div id="stats_header" class="stats">
+										<div class="boxStatsHeader">
+											<p id="HeaderStatsName" class="statsText">Name</p><br></br>
+											<p id="HeaderStats" class="statsText">Configuration</p>
+										</div>
+									</div>
+								</li></label>
+
+
+								<label><li>
+									<div id="shop_1" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="clusterStats" class="statsText">Cluster:</p>
+										</div>
+										<img id="shop_1_img" class="statsImage" src="images/Cluster/rbu.png">
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_2" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="levelStats" class="statsText">Level:</p>
+										</div>
+										<img id="shop_2_img" class="statsImage" src="">
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_3" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="unitStats" class="statsText">Unit:</p>
+										</div>
+										<img id="shop_3_img" class="statsImage" src="images/icons/01_BaseUnit.png">
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_4" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="layoutStats" class="statsText">Layout:</p>
+										</div>
+										<img id="shop_4_img" class="statsImage" src="images/SpaceLayout/01_BaseUnit/layout1.png">
+										
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_5" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="Ag1Stats" class="statsText">Add On:</p>
+										</div>
+										<img id="shop_5_img" class="statsImage" src="images/icons/palapa/flat.1.png">
+										
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_6" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="Ag2Stats" class="statsText">Add On:</p>
+										</div>
+										<img id="shop_6_img" class="statsImage" src="images/icons/palapa/flat.1.png">
+										
+									</div>
+								</li></label>
+								
+							</ul>
+						</div>
+
+
+
+						
+
+						<div id="review-bar" style="display:none">
+							
+							
+								<!-- <li>
+										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
+								</li> -->
+								<!-- <li>
+									<label>
+										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/interiorView.png" onclick="onConfigButton('review','interior')">
+									</label>
+								</li> -->
+								<!-- <li>
+										<input type="radio"  name="review-bar" value="Floorplan"><img class="Review-Icon" src="images/icons/floorPlanView.png" onclick="onConfigButton('review','floorplan')">
+								</li>
+								<li>
+										<input type="radio" name="review-bar" value="Download"><img  class="Review-Icon" src="images/icons/downloadIcon.png" onclick="DownloadOrder()">
+								</li>
+								
+							</ul> -->
+
+					
+								
+								<!-- <li>
+									<label>
+										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/interiorView.png" onclick="onConfigButton('review','interior')">
+									</label>
+								</li> -->
+								
+								
+
+
+									<li><label>
+										<input type="radio" name="reviewInteract" value="Interior"><img class="Review-Icon-Interact" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
+										
+									</label></li>
+									
+									<li><label>
+										<input type="radio"  name="reviewInteract" value="Floorplan"><img class="Review-Icon-Interact" src="images/icons/floorPlanView.png" onclick="onConfigButton('review','floorplan')">
+											
+									</label></li>
+									
+									<li><label>
+										<input type="radio" name="reviewInteract" value="Download"><img  class="Review-Icon-Interact" src="images/icons/downloadIcon.png" onclick="DownloadOrder()">
+										
+									</label></li>
+								
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+		integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
