@@ -592,7 +592,6 @@ function SetStats(srcVal, value_){
 
 
 function UpdateUIStats(){
-	console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP');
 	document.getElementById("HeaderStatsName").innerHTML = playerName;
 
 	document.getElementById("clusterStats").innerHTML = clusterType;
@@ -614,26 +613,41 @@ function SetLayoutSrc(unitType_) {
 		img_a.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout2.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout3.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/base/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/base/Plan/2/floorplan.jpg");
 	}
 	if (unitType_ == 'tall') {
 		img_a.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout2.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout3.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/tall/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/tall/Plan/2/floorplan.jpg");
 	}
 	if (unitType_ == 'wide') {
 		img_a.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout2.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout3.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/wide/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/wide/Plan/2/floorplan.jpg");
 	}
 	if (unitType_ == 'side') {
 		img_a.setAttribute("src", "images/SpaceLayout/04_SideUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/04_SideUnit/layout2.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout3.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/side/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/side/Plan/2/floorplan.jpg");
 	}
 	if (unitType_ == 'villaA') {
 		img_a.setAttribute("src", "images/SpaceLayout/Villa_O/01.png");
 		img_b.setAttribute("src", "images/SpaceLayout/Villa_O/02.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/Villa_O/03.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/villaA/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/villaA/Plan/2/floorplan.jpg");
 
 		//set attribute src for ag2 in villa
 		document.getElementById('img_a_ag2').setAttribute("src", "images/icons/villa/ag2/pergola_1.png");
@@ -643,6 +657,9 @@ function SetLayoutSrc(unitType_) {
 		img_a.setAttribute("src", "images/SpaceLayout/Villa_T/01.png");
 		img_b.setAttribute("src", "images/SpaceLayout/Villa_T/02.png");
 		//img_c.setAttribute("src", "images/SpaceLayout/Villa_T/03.png");
+
+		document.getElementById('img_a_layout_large').setAttribute("src", "src/villaB/Plan/1/floorplan.jpg");
+		document.getElementById('img_b_layout_large').setAttribute("src", "src/villaB/Plan/2/floorplan.jpg");
 
 		//set attribute src for ag2 in villa
 		document.getElementById('img_a_ag2').setAttribute("src", "images/icons/villa/ag2/swimmingpool_1.png");
@@ -1089,7 +1106,7 @@ function UpdateTutorialStep(val){
 	else{
 		document.getElementById("prevTutorial").disabled = false;
 	}
-	if(TutorialStep == 7){
+	if(TutorialStep == 8){
 		document.getElementById("nextTutorial").disabled = true;
 	}
 	else{
@@ -1121,6 +1138,8 @@ function UpdateTutorialStep(val){
 	if(TutorialStep == 7){
 		document.getElementById("instructionsImage").setAttribute("src", "images/Instructions/8.jpg");
 	}
-
+	if(TutorialStep == 8){
+		document.getElementById("instructionsImage").setAttribute("src", "images/Instructions/9.jpg");
+	}
 
 }
