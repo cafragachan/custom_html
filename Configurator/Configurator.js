@@ -17,6 +17,7 @@ var unitSiteAnalysisData = [];
 var unitSiteAnalysisLabels = [];
 var MarketingJSON;
 
+var nextUnlocked = true;
 
 var TutorialStep = 0;
 
@@ -136,13 +137,16 @@ function myHandleResponseFunction(data) {
 	// 	SetGameEstateUI("SelectCluster");
 	// }
 	if ('message' in obj) {
-		ShowActionModal(obj.message);
-		document.getElementById("backButton").disabled = true;
+		//uncomment for confirm message box
+		// ShowActionModal(obj.message);
+		// document.getElementById("backButton").disabled = true;
 
 	}
 	if ('gui' in obj) {
-		UpdateSidebarDisplay(obj.gui);
 		SetGameEstateUI(obj.gui);
+		UpdateSidebarDisplay(obj.gui);
+
+		if(obj.gui == 'SelectUnit') document.getElementById('next-bar').onclick = null;
 	}
 	if('Views' in obj){
 		console.log(Object.keys(obj));
@@ -166,6 +170,9 @@ function myHandleResponseFunction(data) {
 	}
 	if('Layout1' in obj){
 		UpdateLayout_UI(obj);
+	}
+	if('unit' in obj){
+		document.getElementById('next-bar').onclick = Next;
 	}
 
 	// if('instructions' in obj){
@@ -497,15 +504,40 @@ function ShowInstructions(){
 
 
 function SetGameEstateUI(gameEstate) {
-	var navBar = document.querySelectorAll("input.Sidebar-Icon");
+	//var navBar = document.querySelectorAll("input.Sidebar-Icon");
 	gameState = gameEstate;
 
-	for (var i in navBar) {
-		if (navBar[i].value == gameEstate) {
-			console.log('working' + gameEstate);
-			navBar[i].checked = true;
-		}
+	// for (var i in navBar) {
+	// 	if (navBar[i].value == gameEstate) {
+	// 		console.log('working' + gameEstate);
+	// 		navBar[i].checked = true;
+	// 	}
+	// }
+
+	icon = document.getElementById('navBarIcon');
+	if(gameState == 'SelectCluster'){
+		icon.setAttribute('src', "images/icons/select_cluster.png")
 	}
+	else if(gameState == 'SelectLevel'){
+		icon.setAttribute('src', "images/icons/select_level.png")
+	}
+	else if(gameState == 'SelectUnit'){
+		icon.setAttribute('src', "images/icons/select_unit.png")
+	}
+	else if(gameState == 'SelectAddOn1'){
+		icon.setAttribute('src', "images/icons/select_addon_roof.png")
+	}
+	else if(gameState == 'SelectAddOn2'){
+		icon.setAttribute('src', "images/icons/select_addon_balcony.png")
+	}
+	else if(gameState == 'SelectLayout'){
+		icon.setAttribute('src', "images/icons/select_roomlayout.png")
+	}
+	else if(gameState == 'Review'){
+		icon.setAttribute('src', "images/icons/mode_summary.png")
+	}
+	
+
 
 	var radarModal = document.getElementById('RadarModal');
 	radarModal.style.display='none';
@@ -513,6 +545,13 @@ function SetGameEstateUI(gameEstate) {
 }
 
 ///GUI
+
+
+function Spin_UI(){
+	canvas = document.getElementById(gameState)
+	distance = getDistanceBetweenElements(canvas.children[0].children[0], canvas.children[0].children[1])
+	console.log('spinning' + gameState + ', length: ' + distance)
+}
 
 function UpdateAG_UI(obj_){
 	
@@ -549,44 +588,44 @@ function UpdateLayout_UI(obj_){
 
 
 
-function SetStats(srcVal, value_){
-	console.log('source: ' + srcVal);
+function SetStats(id, value_){
+
+	var scrVal = document.getElementById(id).getAttribute("src")
+
+	console.log('source: ' + scrVal);
 	console.log('value:' + value_);
 	console.log('GAMEESTATE: ' + gameState);
 
 	if(gameState == 'SelectCluster'){
-		document.getElementById("shop_1_img").setAttribute("src", srcVal);
+		document.getElementById("shop_1_img").setAttribute("src", scrVal);
 		clusterType = value_;
 		UpdateUIStats();
 	}
 	if(gameState == 'SelectLevel'){
-		document.getElementById("shop_2_img").setAttribute("src", srcVal);
+		document.getElementById("shop_2_img").setAttribute("src", scrVal);
 		levelType = value_;
 		UpdateUIStats();
 	}
 	if(gameState == 'SelectUnit'){
-		document.getElementById("shop_3_img").setAttribute("src", srcVal);
+		document.getElementById("shop_3_img").setAttribute("src", scrVal);
 		// unitType = value_;
 		UpdateUIStats();
-		console.log('testing here')
-	}
-	if(gameState == 'SelectLayout'){
-		document.getElementById("shop_4_img").setAttribute("src", srcVal);
-		layoutType = value_;
-		UpdateUIStats();
-		console.log('baaaaaaaaaaaaad here')
 	}
 	if(gameState == 'SelectAddOn1'){
-		document.getElementById("shop_5_img").setAttribute("src", srcVal);
+		document.getElementById("shop_4_img").setAttribute("src", scrVal);
 		ag1Type = value_;
 		UpdateUIStats();
 	}
 	if(gameState == 'SelectAddOn2'){
-		document.getElementById("shop_6_img").setAttribute("src", srcVal);
+		document.getElementById("shop_5_img").setAttribute("src", scrVal);
 		ag2Type = value_;
 		UpdateUIStats();
 	}
-	
+	if(gameState == 'SelectLayout'){
+		document.getElementById("shop_6_img").setAttribute("src", scrVal);
+		layoutType = value_;
+		UpdateUIStats();
+	}
 }
 
 
@@ -685,7 +724,7 @@ function SetUnitSrc(clusterType_) {
 
 	if (clusterType_ == 'rbu') {
 
-		img_a.style.display = 'block';
+		img_c.style.display = 'block';
 		img_d.style.display = 'block';
 		img_c_ag2.style.display = 'block';
 
@@ -713,12 +752,12 @@ function SetUnitSrc(clusterType_) {
 	}
 	if (clusterType_ == 'villa') {
 
-		img_a.style.display = 'none';
+		img_c.style.display = 'none';
 		img_d.style.display = 'none';
 		img_c_ag2.style.display = 'none';
 
-		img_b.setAttribute("src", "images/icons/05_VillaA.png");
-		img_c.setAttribute("src", "images/icons/06_VillaB.png");
+		img_a.setAttribute("src", "images/icons/05_VillaA.png");
+		img_b.setAttribute("src", "images/icons/06_VillaB.png");
 
 		img_a_ag1.setAttribute("src", "images/icons/villa/ag1/DoubleHight.png");
 		img_b_ag1.setAttribute("src", "images/icons/villa/ag1/SingleHight.png");
@@ -731,8 +770,8 @@ function SetUnitSrc(clusterType_) {
 
 		////large pop up src
 
-		document.getElementById('img_b_unit_large').setAttribute("src", "images/misc/villaA.png");
-		document.getElementById('img_c_unit_large').setAttribute("src", "images/misc/villaB.png");
+		document.getElementById('img_a_unit_large').setAttribute("src", "images/misc/villaA.png");
+		document.getElementById('img_b_unit_large').setAttribute("src", "images/misc/villaB.png");
 	}
 }
 
@@ -750,8 +789,8 @@ function SetUnitType(unitType_) {
 		if(unitType_ == '3') unitType = 'side'
 	}
 	else if (clusterType_ == 'villa') {
-		if(unitType_ == '1') unitType = 'villaA'
-		if(unitType_ == '2') unitType = 'villaB'
+		if(unitType_ == '0') unitType = 'villaA'
+		if(unitType_ == '1') unitType = 'villaB'
 	}
 
 	SetLayoutSrc(unitType_);
@@ -764,7 +803,9 @@ function SetClusterType(clusterType_) {
 
 function UpdateSidebarDisplay(gui) {
 
-	UncheckUI();
+	//UncheckUI();
+	GUIUncheckAllExcept(0);
+
 	var els = document.getElementsByClassName("panel-group");
 	console.log('length of panels: ' + els.length);
 
@@ -788,6 +829,8 @@ function UpdateSidebarDisplay(gui) {
 
 	if (gui != 'Login') {
 		document.getElementById('nav-bar').style.display = 'flex';
+		document.getElementById('back-bar').style.display = 'flex';
+		document.getElementById('next-bar').style.display = 'flex';
 		document.getElementById('shopping-bar').style.display = 'flex';
 	}
 	if(gui == 'Review'){
@@ -806,13 +849,13 @@ function UpdateShoppingBar(){
 	if(gameState == 'SelectUnit'){
 		document.getElementById("shop_3").style.display = "block";
 	}
-	if(gameState == 'SelectLayout'){
+	if(gameState == 'SelectAddOn1'){
 		document.getElementById("shop_4").style.display = "block";
 	}
-	if(gameState == 'SelectAddOn1'){
+	if(gameState == 'SelectAddOn2'){
 		document.getElementById("shop_5").style.display = "block";
 	}
-	if(gameState == 'SelectAddOn2'){
+	if(gameState == 'SelectLayout'){
 		document.getElementById("shop_6").style.display = "block";
 	}
 	
@@ -825,13 +868,13 @@ function UndoShoppingBar(){
 	if(gameState == 'SelectUnit'){
 		document.getElementById("shop_2").style.display = "none";
 	}
-	if(gameState == 'SelectLayout'){
+	if(gameState == 'SelectAddOn1'){
 		document.getElementById("shop_3").style.display = "none";
 	}
-	if(gameState == 'SelectAddOn1'){
+	if(gameState == 'SelectAddOn2'){
 		document.getElementById("shop_4").style.display = "none";
 	}
-	if(gameState == 'SelectAddOn2'){
+	if(gameState == 'SelectLayout'){
 		document.getElementById("shop_5").style.display = "none";
 	}
 	if(gameState == 'Review'){
@@ -844,11 +887,45 @@ function UndoSystem(){
 	document.getElementById("review-bar").style.display = "none";
 }
 
-function UncheckUI(gameEstate) {
-	var panelIcons = document.querySelectorAll("input.selectType");
+function GUIUncheckAllExcept(index) {
+	//var panelIcons = document.querySelectorAll("input.selectType");
+	var pans  = '#' + gameState + ' div li input.selectType';
+	var panelIcons = document.querySelectorAll(pans);
+
+	console.log('panel childs: ' + panelIcons.length)
 
 	for (var i in panelIcons) {
-		panelIcons[i].checked = false;
+		if(gameState != 'SelectLevel'){
+			if(i == index) {
+				panelIcons[i].checked = true;
+				console.log('wrapper')
+				panelIcons[i].click()
+				console.log('wrapper')
+
+			}
+			else panelIcons[i].checked = false;
+		}
+		else{
+			if(clusterType == 'rbu'){
+				if(i == index) {
+					panelIcons[i].checked = true;
+					console.log('wrapper')
+					panelIcons[i].click()
+					console.log('wrapper')
+				}
+				else panelIcons[i].checked = false;
+			}
+			else{
+				if(i == 2){
+					panelIcons[i].checked = true;
+					console.log('wrapper')
+					panelIcons[i].click()
+					console.log('wrapper')
+				} 
+				else panelIcons[i].checked = false;
+			}
+		}
+		
 	}
 }
 
@@ -882,8 +959,8 @@ function onConfigUnit(category, item) {
 	}
 	if (clusterType == 'villa') {
 
-		if(item == '1') unitType = 'villaA';
-		if(item == '2') unitType = 'villaB';
+		if(item == '0') unitType = 'villaA';
+		if(item == '1') unitType = 'villaB';
 
 		let descriptor =
 		{
@@ -1030,6 +1107,11 @@ function DownloadOrder()
 	//console.log(out);
 }
 
+function Next(){
+	onConfigButton('action','yes'); 
+	UpdateShoppingBar();
+}
+
 
 /////////////////////////////////
 
@@ -1143,3 +1225,20 @@ function UpdateTutorialStep(val){
 	}
 
 }
+
+
+function getPositionAtCenter(element) {
+	const {top, left, width, height} = element.getBoundingClientRect();
+	return {
+	  x: left + width / 2,
+	  y: top + height / 2
+	};
+}
+ 
+function getDistanceBetweenElements(a, b) {
+   const aPosition = getPositionAtCenter(a);
+   const bPosition = getPositionAtCenter(b);
+ 
+   return Math.hypot(aPosition.x - bPosition.x, aPosition.y - bPosition.y);  
+}
+ 

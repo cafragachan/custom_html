@@ -223,7 +223,7 @@ p {
     font-family:Verdana,sans-serif;
     font-size: 1.2em;
     font-weight: 500;
-    line-height: 1.5em;
+    line-height: 0.5em;
     margin-right: 25px;
     color: #ffffff;
 }
@@ -250,13 +250,14 @@ a, a:hover, a:focus {
 
 #sidebar {
     /* don't forget to add all the previously mentioned styles here too */
-    position:fixed;
-    background-color: #0000002f;
-    min-width: 210px;
-    max-width: 210px;
+    position: fixed;
+    background-color: transparent;
+    min-width: 180px;
+    max-width: 180px;
     min-height: 100vh;
     max-height: 100%;
-    margin-left: 40px;
+    left: 120px;
+    /* margin-left: 40px; */
     color: #ffffff;
     transition: all 0.3s;
     z-index: 100;
@@ -346,7 +347,7 @@ a, a:hover, a:focus {
   position: fixed;
   width: 240px;
   top: 0;
-  left: 0;
+  left: 60px;
   bottom: 0;
   z-index: 999;
   -webkit-transition: left 300ms;
@@ -356,6 +357,7 @@ a, a:hover, a:focus {
   align-items: center;
   list-style-type: none;
   margin-left: 25px;
+  padding-left: 35px;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
@@ -616,27 +618,27 @@ div li [type=radio] {
   
   /* CHECKED STYLES */
   div>li>label>[type=radio]:checked + img {
-    outline: 2px solid rgb(255, 0, 140); 
+    border-left: 3px solid rgb(255, 0, 140); 
     /* outline: 1px solid rgb(255, 255, 255);  */
     max-width: 90%;
     margin-right: 25px;
     margin-top: 10px;
-    background-color: #1f1f1f6b;
+    background-color: transparent;
   }
 
   /* CHECKED STYLES */
   div>li>label>[type=radio]:hover + img {
     /* outline: 1px solid rgb(255, 255, 255);  */
-    max-width: 90%;
+    /* max-width: 90%;
     margin-right: 25px;
     margin-top: 10px;
-    background-color: #00000000;
+    background-color: #00000000; */
 
   }
 
  /* IMAGE STYLES Left Navbar*/
   ul>li>label>[type=radio] + img {
-    background-color: #000000;
+    background-color: transparent;
     max-width: 100%;
     height: 100px;
     padding-top: 20px;
@@ -646,12 +648,13 @@ div li [type=radio] {
 
     /* CHECKED STYLES Left Navbar */
     ul>li>label>[type=radio]:checked + img {
-      background-color: #1f1f1f;
-      border-bottom: 3px solid rgb(255, 0, 140); 
-      max-width: 100%;
-      height: 100px;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      background-color: transparent;
+      /* background-color: #1f1f1f; */
+      /* border-bottom: 3px solid rgb(255, 0, 140);  */
+      width: 100%;
+      height: auto;
+      padding-top: 60px;
+      padding-bottom: 60px;
       
     }
 
@@ -757,7 +760,7 @@ div li [type=radio] {
     vertical-align: middle;
     margin: auto;
     padding: 20px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 2px solid #1f1f1f;
     border-radius: 0px;
     width: 80%;
     height: 80%;
@@ -855,8 +858,33 @@ div li [type=radio] {
       padding-right: 20px;
    }
 
-   #nav-bar{
-      background-color: #000000;
+   #next-bar{
+    background-color: #0c0c0c;
+    transition: all 0.3s;
+    position: fixed;
+    width: 60px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* overflow-y: auto; */
+    z-index: 999;
+    -webkit-transition: left 300ms;
+    -o-transition: left 300ms;
+    transition: left 300ms;
+    display: flex;
+    align-items: center;
+    border-right: 2px solid #1f1f1f;;
+    transform: scaleX(-1.0);
+  }
+  #next-bar:hover{
+    background-color: #1f1f1f;
+  }
+  #back-bar:hover{
+    background-color: #1f1f1f;
+  }
+
+    #back-bar{
+      background-color: #0c0c0c;
       transition: all 0.3s;
       position: fixed;
       width: 60px;
@@ -870,12 +898,46 @@ div li [type=radio] {
       transition: left 300ms;
       display: flex;
       align-items: center;
+      border-right: 2px solid #1f1f1f;;
+    }
+
+   #nav-bar{
+      background-color: #0c0c0c9c;
+      transition: all 0.3s;
+      position: fixed;
+      width: 60px;
+      top: 0;
+      left: 60px;
+      bottom: 0;
+      /* overflow-y: auto; */
+      z-index: 999;
+      -webkit-transition: left 300ms;
+      -o-transition: left 300ms;
+      transition: left 300ms;
+      display: flex;
+      align-items: center;
+      border-right: 2px solid #1f1f1f;;
+
    }
 
    #nav-bar ul{
       list-style-type: none;
       padding-left: 0px;
    }
+
+   #right-bar{
+    background-color: #0c0c0c9c;
+    position: fixed;
+    width: 60px;
+    top: 0;
+    right: 60px;
+    bottom: 0;
+    /* overflow-y: auto; */
+    z-index: 500;
+    display: flex;
+    border-left: 2px solid #1f1f1f;;
+
+ }
 
 
    .Sidebar-Icon {
@@ -902,8 +964,9 @@ div li [type=radio] {
     }
 
     #backButton{
-      max-width: 100%;
-      margin-top: 50px;
+      width: 50px;
+      height: auto;
+      /* margin-top: 50px; */
       vertical-align: middle;
     }
 
@@ -911,35 +974,22 @@ div li [type=radio] {
 /*////////////////////////////////////*/
 
 #review-bar{
-  /* background-color: #00000000;
+  background-color: #0f0f0f45;
+  border: 2px solid #1f1f1f;
   transition: all 0.3s;
   position: fixed;
-  width: 100px;
+  width: 280px;
+  height: 60px;
   bottom: 50;
-  right: 0;
-  bottom: 0;
+  margin-right: -140px;
+  right: 50%;
+  bottom: 20px;
   z-index: 999;
   -webkit-transition: left 300ms;
   -o-transition: left 300ms;
   transition: left 300ms;
   display: flex;
-  align-items: center; */
-
-  background-color: #00000000;
-    transition: all 0.3s;
-    position: fixed;
-    width: 300px;
-    height: 100px;
-    bottom: 50;
-    margin-right: -150px;
-    right: 50%;
-    bottom: 0;
-    z-index: 999;
-    -webkit-transition: left 300ms;
-    -o-transition: left 300ms;
-    transition: left 300ms;
-    display: flex;
-    align-items: center;
+  align-items: center;
 }
 
 .Sidebar-Icon {
@@ -1029,7 +1079,7 @@ div li [type=radio] {
   position: fixed;
   width: 240px;
   top: 0;
-  right: 0;
+  right: 60px;
   bottom: 0;
   /* overflow-y: auto; */
   z-index: 999;
@@ -1072,14 +1122,16 @@ div li [type=radio] {
 }
 .boxStats{
   height: 60px;
-  width: 180px;
-  float: left;
-  background-color: #0000001f;
+    width: 175px;
+    float: left;
+    background-color: #0f0f0f45;
+    border-right: 2px solid #1f1f1f;
+
 }
 .statsImage{
   max-width: 60px;
   float: right;
-  border-left: 2px solid white;
+  /* border-left: 2px solid white; */
 }
 .statsText{
   padding-top: 5px;
@@ -1088,12 +1140,12 @@ div li [type=radio] {
   text-align: right;
 }
 .boxStatsHeader{
-  border-right: 3px solid white;
-  border-bottom: 1px solid white;
-  height: 90px;
-  width: 180px;
-  float: left;
-  background-color: #0000001f;
+  border-right: 3px solid #1f1f1f;
+    border-bottom: 1px solid #1f1f1f;
+    height: 90px;
+    width: 175px;
+    float: left;
+    background-color: #0f0f0f45;
 }
 
 #Instructions{
@@ -1120,9 +1172,82 @@ li:hover .large {
 }
 
 .large-image {
-  max-height: 200px;
-  border-radius: 2px;
-   box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.15);;
-   outline: 2px solid rgb(255, 255, 255);
+  top: 5px;
+  width: 100%;
+  height: auto;
+  box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.15);;
+  outline: 2px solid #1f1f1f;
 
+}
+
+.spanContainer{
+  height: 250px;
+  width: 360px;
+  outline: 2px solid #1f1f1f;
+  background-color: #0f0f0f9c;
+}
+
+/*define CSS Variables to be modified by JavaScript*/
+:root {
+  --tx: 0;
+  --ty: 0;
+  --scale: 1;
+  --deg: 0deg;
+}
+
+.mover {
+  /* THIS is the important line */
+  transform: 
+    translate3d(var(--tx), var(--ty), 0) 
+    scale(var(--scale)) 
+    rotate(var(--deg));
+  
+  --hue: 120;
+  --duration: 2000ms;
+  
+  transition: transform var(--duration) linear;
+  will-change: transform;
+  
+  background: hsl(var(--hue), 90%, 52%);
+  width: 15vmin;
+  height: 15vmin;
+  border-radius: 10%;
+}
+
+/*  */
+
+
+#upButton{
+  background-color: #1f1f1f;
+  transition: all 0.3s;
+  position: fixed;
+  height: 60px;
+  top: 50%;
+  /* margin-bottom: 80px; */
+  overflow-y: auto;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  transform: rotate(90deg) translateX(-165px);
+  /* transform: translateY(-120px);*/
+}
+#downButton{
+  background-color: #1f1f1f;
+    transition: all 0.3s;
+    position: fixed;
+    height: 60px;
+    bottom: 50%;
+    /* margin-bottom: 80px; */
+    overflow-y: auto;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    transform: rotate(-90deg) translateX(-145px);
+    /* transform: translateY(-120px);*/
+}
+
+.Nav-Icon{
+  background-color: transparent;
+  width: 75%;
+  height: auto;
 }

@@ -19,15 +19,16 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-	<script src="/socket.io/socket.io.js"></script>
+	<!-- <script src="/socket.io/socket.io.js"></script> -->
 	<script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 	<script type="text/javascript" src="/scripts/webRtcPlayer.js"></script>
 	<script type="text/javascript" src="/scripts/app.js"></script>
 	<script type="text/javascript" src="Configurator.js"></script>
+	<script type="text/javascript" src="carousel.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="./myChart.js"></script>
+
 
 	<link type="text/css" rel="stylesheet" href="Configurator.css">
 
@@ -42,6 +43,7 @@
 
 
 	<!-- Login Modal -->
+
 	<div id="LoginModal" class="modal">
 
 		<!-- Modal content -->
@@ -76,6 +78,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<!--Instructions Modal -->
 	<div id="InstructionsModal" class="modal">
@@ -146,20 +149,50 @@
 
 						<div id="curtain" style="display:none"></div>
 
+
+						<div id="back-bar" class="back-next-bar" style="display:none" onclick="onConfigButton('undo',''); UndoSystem()">
+							<img class="Nav-Icon" src="images/icons/back_icon.png">
+						</div>
+
+
+						<div id="next-bar" class="back-next-bar" style="display:none" onclick="Next()">
+							<img class="Nav-Icon" src="images/icons/back_icon.png">
+							<!-- <input type="image"  class="Sidebar-Icon" src="images/icons/back_icon.png" onclick="onConfigButton('action','yes')" onmouseover="hoverImg(this);" onmouseout="unhoverImg(this);"> -->
+						</div>
+
+
+
 						<div id="nav-bar" style="display:none">
 							
 							<ul>
-								<li>
+								<!-- <li>
 									<label>
 										<input type="radio"class="Sidebar-Icon" name="nav-bar" value="SelectSite" disabled="true"><img src="images/icons/select_site.png">
 									</label>
-								</li>
+								</li> -->
+
+<!-- ----------------------------------------------------------------- -->
+
+								<!-- <div>
+									<input type="image"  style ="background-color:#1f1f1f" id="upButton" src="images/icons/back_icon.png" onclick="set_track('p_cluster', 0);">
+									
+								</div> -->
 								<li>
 									<label>
-										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectCluster" disabled="true"><img src="images/icons/select_cluster.png">
+										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectCluster" disabled="true"><img id="navBarIcon" src="images/icons/select_cluster.png">
 									</label>
 								</li>
-								<li>
+								<!-- <div>
+									<input type="image"  style ="background-color:#1f1f1f" id="downButton" src="images/icons/back_icon.png" onclick="Spin_UI();" onmouseover="hoverImg(this);" onmouseout="unhoverImg(this);">
+									
+								</div> -->
+
+
+
+<!-- ----------------------------------------------------------------- -->
+
+
+								<!-- <li>
 									<label>
 										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="SelectUnit" disabled="true"><img src="images/icons/select_unit.png">
 									</label>
@@ -178,36 +211,39 @@
 									<label>
 										<input type="radio" class="Sidebar-Icon" name="nav-bar" value="Review" disabled="true"><img src="images/icons/mode_summary.png">
 									</label>
-								</li>
+								</li>  -->
 
 
-								<li>
-									<label>
-										<input type="image"  id="backButton" class="Sidebar-Icon" src="images/icons/back_icon.png" onclick="onConfigButton('undo',''); UndoSystem()" onmouseover="hoverImg(this);" onmouseout="unhoverImg(this);">
-									</label>
-								</li>
+								
 							</ul>
 						</div>
 
 
 
-
-
-
 						<div id="sidebar" style="display:none">
+
+							
 
 							<ul id="SelectCluster" class="panel-group" style="display:none">
 								<div id="p_cluster">
 									<li><label>
-										<input type="radio" class="selectType" name="cluster" value="rbu">
-										<img id="img_a_cluster" src="images/Cluster/rbu.png"
-											onclick="onConfigButton('cluster','rbu'); SetClusterType('rbu'); SetStats(src,'rbu')"><span class="large"><img src="images/misc/rbu.png" class="large-image" alt="Rbu"><br><p>Stack Houses</p></span>
+										<input type="radio" class="selectType" name="cluster" value="rbu" onclick="onConfigButton('cluster','rbu'); SetClusterType('rbu'); SetStats('img_a_cluster','rbu')">
+										<img id="img_a_cluster" src="images/Cluster/rbu.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img src="images/misc/rbu.png" class="large-image" alt="Rbu"><br><p>Stack Houses</p>
+											</div>
+										</span>
 									</label>
 									</li>
 									<li><label>
-											<input type="radio" class="selectType" name="cluster" value="villa">
-											<img id="img_b_cluster" src="images/Cluster/villa.png"
-												onclick="onConfigButton('cluster','villa'); SetClusterType('villa'); SetStats(src,'villa')"><span class="large"><img src="images/misc/villa.png" class="large-image" alt="Rbu"><br><p>Villas</p></span>
+											<input type="radio" class="selectType" name="cluster" value="villa" onclick="onConfigButton('cluster','villa'); SetClusterType('villa'); SetStats('img_b_cluster','villa')">
+											<img id="img_b_cluster" src="images/Cluster/villa.png">
+											<span class="large">
+												<div class= "spanContainer">
+													<img src="images/misc/villa.png" class="large-image" alt="Rbu"><br><p>Villas</p>
+												</div>
+											</span>
 										</label>
 									</li>
 								</div>
@@ -219,32 +255,27 @@
 							<ul id="SelectLevel" class="panel-group" style="display:none">
 								<div id="p_level">
 									<li><label>
-										<input type="radio" class="selectType" name="level" value="4">
-										<img id="img_a_level" src="images/icons/levels/4.png"
-											onclick="onConfigButton('level','4'); SetStats(src,'level 5')">
+										<input type="radio" class="selectType" name="level" value="4" onclick="onConfigButton('level','4'); SetStats('img_a_level','level 5')">
+										<img id="img_a_level" src="images/icons/levels/4.png">
 									</label></li>
 
 									<li><label>
-										<input type="radio" class="selectType" name="level" value="3">
-										<img id="img_b_level" src="images/icons/levels/3.png"
-											onclick="onConfigButton('level','3'); SetStats(src,'level 4')">
+										<input type="radio" class="selectType" name="level" value="3" onclick="onConfigButton('level','3'); SetStats('img_b_level','level 4')">
+										<img id="img_b_level" src="images/icons/levels/3.png">
 									</label></li>
 
 									<li><label>
-										<input type="radio" class="selectType" name="level" value="2">
-										<img id="img_c_level" src="images/icons/levels/2.png"
-											onclick="onConfigButton('level','2'); SetStats(src,'level 3')">
+										<input type="radio" class="selectType" name="level" value="2" onclick="onConfigButton('level','2'); SetStats('img_c_level','level 3')">
+										<img id="img_c_level" src="images/icons/levels/2.png">
 									</label></li>
 
 									<li><label>
-										<input type="radio" class="selectType" name="level" value="1">
-										<img id="img_d_level" src="images/icons/levels/1.png"
-											onclick="onConfigButton('level','1'); SetStats(src,'level 2')">
+										<input type="radio" class="selectType" name="level" value="1" onclick="onConfigButton('level','1'); SetStats('img_d_level','level 2')">
+										<img id="img_d_level" src="images/icons/levels/1.png"	>
 									</label></li>
 									<li><label>
-										<input type="radio" class="selectType" name="level" value="0">
-										<img id="img_e_level" src="images/icons/levels/0.png"
-											onclick="onConfigButton('level','0'); SetStats(src,'level 1')">
+										<input type="radio" class="selectType" name="level" value="0" onclick="onConfigButton('level','0'); SetStats('img_e_level','level 1')">
+										<img id="img_e_level" src="images/icons/levels/0.png">
 									</label></li>
 								</div>
 							</ul>
@@ -254,32 +285,47 @@
 
 							<ul id="SelectUnit" class="panel-group" style="display:none">
 								<div id="p_unit">
-									<li><label>
-										<input type="radio" class="selectType" name="unit" value="base">
-										<img id="img_a_unit" src="images/icons/01_BaseUnit.png"
-											onclick="onConfigUnit('unit','0'); SetStats(src,'base')"><span class="large"><img id="img_a_unit_large" src="images/misc/base.png" class="large-image" alt="Rbu"><br><p>Base Unit<br>75 sqm</p></span>
-									</label>
-									</li>
 
 									<li><label>
-											<input type="radio" class="selectType" name="unit" value="tall">
-											<img id="img_b_unit" src="images/icons/02_TallUnit.png"
-												onclick="onConfigUnit('unit','1'); SetStats(src,'tall')"><span class="large"><img id="img_b_unit_large" src="images/misc/tall.png" class="large-image" alt="Rbu"><br><p>Tall Unit<br>150 sqm</p></span>
+										<input type="radio" class="selectType" name="unit" value="base" onclick="onConfigUnit('unit','0'); SetStats('img_a_unit','base')">
+										<img id="img_a_unit" src="images/icons/01_BaseUnit.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img id="img_a_unit_large" src="images/misc/base.png" class="large-image" alt="Rbu"><br><p>Base Unit<br><br>75 sqm</p>
+											</div>
+										</span>
 										</label>
 									</li>
 
 									<li><label>
-											<input type="radio" class="selectType" name="unit" value="wide">
-											<img id="img_c_unit" src="images/icons/03_WideUnit.png"
-												onclick="onConfigUnit('unit','2'); SetStats(src,'wide')"><span class="large"><img id="img_c_unit_large" src="images/misc/wide.png" class="large-image" alt="Rbu"><br><p>Wide Unit<br>225 sqm</p></span>
+										<input type="radio" class="selectType" name="unit" value="tall" onclick="onConfigUnit('unit','1'); SetStats('img_b_unit','tall')">
+										<img id="img_b_unit" src="images/icons/02_TallUnit.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img id="img_b_unit_large" src="images/misc/tall.png" class="large-image" alt="Rbu"><br><p>Tall Unit<br><br>150 sqm</p></span>
+											</div>
+										</label>
+									</li>
+
+									<li><label>
+										<input type="radio" class="selectType" name="unit" value="wide" onclick="onConfigUnit('unit','2'); SetStats('img_c_unit','wide')">
+										<img id="img_c_unit" src="images/icons/03_WideUnit.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img id="img_c_unit_large" src="images/misc/wide.png" class="large-image" alt="Rbu"><br><p>Wide Unit<br><br>225 sqm</p></span>
+											</div>
 										</label>
 									</li>
 									<li><label>
-										<input type="radio" class="selectType" name="unit" value="double">
-										<img id="img_d_unit" src="images/icons/04_DoubleUnit.png"
-											onclick="onConfigUnit('unit','3'); SetStats(src,'side')"><span class="large"><img id="img_d_unit_large" src="images/misc/double.png" class="large-image" alt="Rbu"><br><p>Side Unit<br>150 sqm</p></span>
-									</label>
-								</li>
+										<input type="radio" class="selectType" name="unit" value="double" onclick="onConfigUnit('unit','3'); SetStats('img_d_unit','side')">
+										<img id="img_d_unit" src="images/icons/04_DoubleUnit.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img id="img_d_unit_large" src="images/misc/double.png" class="large-image" alt="Rbu"><br><p>Side Unit<br><br>150 sqm</p></span>
+											</div>
+										</label>
+									</li>
+
 								</div>
 							</ul>
 
@@ -289,16 +335,22 @@
 							<ul id="SelectLayout" class="panel-group" style="display:none">
 								<div id="p_layout">
 									<li><label>
-											<input type="radio" class="selectType" name="layout" value="layoutA">
-											<img id="img_a_layout" src="images/SpaceLayout/01_BaseUnit/layout1.png"
-												onclick="onConfigButton('layout','1'); SetStats(src, 'LayoutA')"><span class="large"><img id="img_a_layout_large" src="src/base/Plan/1/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+											<input type="radio" class="selectType" name="layout" value="layoutA" onclick="onConfigButton('layout','1'); SetStats('img_a_layout', 'LayoutA')">
+											<img id="img_a_layout" src="images/SpaceLayout/01_BaseUnit/layout1.png">
+											<span class="large">
+												<div class= "spanContainer">
+													<img id="img_a_layout_large" src="src/base/Plan/1/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+												</div>
 										</label>
 									</li>
 
 									<li><label>
-											<input type="radio" class="selectType" name="layout" value="layoutB">
-											<img id="img_b_layout" src="images/SpaceLayout/01_BaseUnit/layout2.png"
-												onclick="onConfigButton('layout','2'); SetStats(src, 'LayoutB')"><span class="large"><img id="img_b_layout_large" src="src/base/Plan/2/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+											<input type="radio" class="selectType" name="layout" value="layoutB" onclick="onConfigButton('layout','2'); SetStats('img_b_layout', 'LayoutB')">
+											<img id="img_b_layout" src="images/SpaceLayout/01_BaseUnit/layout2.png">
+											<span class="large">
+												<div class= "spanContainer">
+													<img id="img_b_layout_large" src="src/base/Plan/2/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+												</div>
 										</label>
 									</li>
 
@@ -317,15 +369,13 @@
 
 								<div id="p_ag1">
 									<li><label>
-											<input type="radio" class="selectType" name="roof" value="Flat">
-											<img id="img_a_ag1" src="images/icons/palapa/flat.1.png"
-												onclick="onConfigButton('ag_roof','1'); SetStats(src, 'Flat')">
+										<input type="radio" class="selectType" name="roof" value="Flat" onclick="onConfigButton('ag_roof','1'); SetStats('img_a_ag1', 'Flat')">
+										<img id="img_a_ag1" src="images/icons/palapa/flat.1.png">
 										</label>
 									</li>
 									<li><label>
-										<input type="radio" class="selectType" name="roof" value="Palapa">
-										<img id="img_b_ag1" src="images/icons/palapa/palapa.1.png"
-											onclick="onConfigButton('ag_roof','2'); SetStats(src, 'Palapa')">
+										<input type="radio" class="selectType" name="roof" value="Palapa" onclick="onConfigButton('ag_roof','2'); SetStats('img_b_ag1', 'Palapa')">
+										<img id="img_b_ag1" src="images/icons/palapa/palapa.1.png">
 									</label>
 								</li>
 								</div>
@@ -334,21 +384,18 @@
 							<ul id="SelectAddOn2" class="panel-group" style="display:flex">
 								<div id="terrace_ag">
 									<li><label>
-											<input type="radio" class="selectType" name="terrace" value="Small Terrace">
-											<img id="img_a_ag2" src="images/icons/terrace/25_terrace.1.png"
-												onclick="onConfigButton('ag_terrace','1'); SetStats(src, 'Small Terrace')">
+											<input type="radio" class="selectType" name="terrace" value="Small Terrace" onclick="onConfigButton('ag_terrace','1'); SetStats('img_a_ag2', 'Small Terrace')">
+											<img id="img_a_ag2" src="images/icons/terrace/25_terrace.1.png">
 										</label>
 									</li>
 									<li><label>
-											<input type="radio" class="selectType" name="terrace" value="Medium Terrace">
-											<img id="img_b_ag2" src="images/icons/terrace/50_terrace.1.png"
-												onclick="onConfigButton('ag_terrace','2'); SetStats(src, 'Medium Terrace')">
+											<input type="radio" class="selectType" name="terrace" value="Medium Terrace" onclick="onConfigButton('ag_terrace','2'); SetStats('img_b_ag2', 'Medium Terrace')">
+											<img id="img_b_ag2" src="images/icons/terrace/50_terrace.1.png">
 										</label>
 									</li>
 									<li><label>
-										<input type="radio" class="selectType" name="terrace" value="Large Terrace">
-										<img id="img_c_ag2" src="images/icons/terrace/75_terrace.1.png"
-											onclick="onConfigButton('ag_terrace','3'); SetStats(src, 'Large Terrace')">
+										<input type="radio" class="selectType" name="terrace" value="Large Terrace" onclick="onConfigButton('ag_terrace','3'); SetStats('img_c_ag2', 'Large Terrace')">
+										<img id="img_c_ag2" src="images/icons/terrace/75_terrace.1.png">
 									</label>
 								</li>
 								</div>
@@ -356,7 +403,7 @@
 
 
 							
-							<ul id="SelectFurniture" class="panel-group" style="display:none">
+							<!-- <ul id="SelectFurniture" class="panel-group" style="display:none">
 								<div id="p_furniture">
 									<li><label>
 										<input type="radio" class="selectType" name="unit" value="ZHA">
@@ -372,10 +419,13 @@
 										</label>
 									</li>
 								</div>
-							</ul>
+							</ul> -->
 						</div>
 
 
+
+
+						<div id="right-bar" style="display:flex"></div>
 
 
 
@@ -387,6 +437,7 @@
 										<div class="boxStatsHeader">
 											<p id="HeaderStatsName" class="statsText">Name</p><br></br>
 											<p id="HeaderStats" class="statsText">Configuration</p>
+											<p id="HeaderStats" class="statsText">$xxx,xxx.xx</p>
 										</div>
 									</div>
 								</li></label>
@@ -415,20 +466,20 @@
 										</div>
 										<img id="shop_3_img" class="statsImage" src="images/icons/01_BaseUnit.png">
 									</div>
-								</li></label>
+								</li></label>							
 								<label><li>
 									<div id="shop_4" class="stats" style="display: none;">
 										<div class="boxStats">
-											<p id="layoutStats" class="statsText">Layout:</p>
+											<p id="Ag1Stats" class="statsText">Add On:</p>
 										</div>
-										<img id="shop_4_img" class="statsImage" src="images/SpaceLayout/01_BaseUnit/layout1.png">
+										<img id="shop_4_img" class="statsImage" src="images/icons/palapa/flat.1.png">
 										
 									</div>
 								</li></label>
 								<label><li>
 									<div id="shop_5" class="stats" style="display: none;">
 										<div class="boxStats">
-											<p id="Ag1Stats" class="statsText">Add On:</p>
+											<p id="Ag2Stats" class="statsText">Add On:</p>
 										</div>
 										<img id="shop_5_img" class="statsImage" src="images/icons/palapa/flat.1.png">
 										
@@ -437,9 +488,9 @@
 								<label><li>
 									<div id="shop_6" class="stats" style="display: none;">
 										<div class="boxStats">
-											<p id="Ag2Stats" class="statsText">Add On:</p>
+											<p id="layoutStats" class="statsText">Layout:</p>
 										</div>
-										<img id="shop_6_img" class="statsImage" src="images/icons/palapa/flat.1.png">
+										<img id="shop_6_img" class="statsImage" src="images/SpaceLayout/01_BaseUnit/layout1.png">
 										
 									</div>
 								</li></label>
@@ -454,34 +505,7 @@
 						<div id="review-bar" style="display:none">
 							
 							
-								<!-- <li>
-										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
-								</li> -->
-								<!-- <li>
-									<label>
-										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/interiorView.png" onclick="onConfigButton('review','interior')">
-									</label>
-								</li> -->
-								<!-- <li>
-										<input type="radio"  name="review-bar" value="Floorplan"><img class="Review-Icon" src="images/icons/floorPlanView.png" onclick="onConfigButton('review','floorplan')">
-								</li>
-								<li>
-										<input type="radio" name="review-bar" value="Download"><img  class="Review-Icon" src="images/icons/downloadIcon.png" onclick="DownloadOrder()">
-								</li>
-								
-							</ul> -->
-
-					
-								
-								<!-- <li>
-									<label>
-										<input type="radio" name="review-bar" value="Interior"><img class="Review-Icon" src="images/icons/interiorView.png" onclick="onConfigButton('review','interior')">
-									</label>
-								</li> -->
-								
-								
-
-
+						
 									<li><label>
 										<input type="radio" name="reviewInteract" value="Interior"><img class="Review-Icon-Interact" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
 										
