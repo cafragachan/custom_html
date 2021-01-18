@@ -1191,14 +1191,74 @@ function DownloadOrder()
 	var renderImage = "";
 	var planImage = "";
 	var interiorImage = "";
+	var beyabuImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/beyabu_image.jpg?raw=true";
+	var beyabuInfo = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/beyabu_info.jpg?raw=true";
+	var locationImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/location_map.jpg?raw=true";
+	var locationinfo = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/location_info.jpg?raw=true";
+	var clusterImage = ""
+	var clusterInfo = ""
+
+
+	var layoutData= "";
+	var ag1Data= "";
+	var ag2Data= "";
+	
+	var unitAreaData= MarketingJSON.base.unit;
+	var unitDescriptionData= MarketingJSON.base.description;
+
+	if(clusterType == "rbu") {
+		clusterImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/rbu/rbu.png?raw=true"
+		clusterInfo = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/rbu/rbu_info.jpg?raw=true"
+	}
+	else{
+		clusterImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villa/villa.png?raw=true"
+		clusterInfo = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villa/villa_info.jpg?raw=true"
+	}
+
+
+
 
 	if(unitType == "base"){
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/RBU_Base_Palapa_1.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/InteriorRender.png?raw=true";
 
-		if(layoutType == "LayoutA") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/1/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutB") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/2/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/3/floorplan.jpg?raw=true";
+		if(layoutType == "LayoutA"){
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/1/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.base.LayoutA;
+		}
+		else if(layoutType == "LayoutB") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/2/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.base.LayoutB;
+		}
+		else if(layoutType == "LayoutC") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/3/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.base.LayoutB;
+		}
+
+		if(ag1Type == 'Flat'){
+			ag1Data= MarketingJSON.base.addOn1_A;
+			console.log('add on json: ' + MarketingJSON.base.addOn1_A);
+		}
+		else if(ag1Type == 'Palapa'){
+			ag1Data= MarketingJSON.base.addOn1_B;
+		}
+
+		if(ag2Type == 'Small Terrace'){
+			ag2Data= MarketingJSON.base.addOn2_A;
+		}
+		else if(ag2Type == 'Medium Terrace'){
+			ag2Data= MarketingJSON.base.addOn2_B;
+			console.log('add on 2 json: ' + MarketingJSON.base.addOn2_B);
+		}
+		else if(ag2Type == 'Large Terrace'){
+			ag2Data= MarketingJSON.base.addOn2_C;
+		}
+
+		console.log('ag1Type on 1: ' + ag1Type);
+		console.log('ag2Type on 2: ' + ag2Type);
+
+		console.log('add on 1: ' + ag1Data);
+		console.log('add on 2: ' + ag2Data);
 
 	}
 	if(unitType == "wide"){
@@ -1244,11 +1304,6 @@ function DownloadOrder()
 
 
 
-
-	var layoutData= MarketingJSON.base.LayoutA;
-	var unitAreaData= MarketingJSON.base.unit;
-	var unitDescriptionData= MarketingJSON.base.description;
-
 	////////////////////////
 	var textHtml = loadFile("test.html");
 	var strs = textHtml.split("custom_unit_area");
@@ -1273,7 +1328,31 @@ function DownloadOrder()
 	var textHTML8 = strs[0]+unitID+strs[1]
 
 	strs = textHTML8.split("custom_int_render")
-	var newtextHTML = strs[0]+interiorImage+strs[1]
+	var textHTML9 = strs[0]+interiorImage+strs[1]
+
+	strs = textHTML9.split("beyabu_img")
+	var textHTML10 = strs[0]+beyabuImage+strs[1]
+
+	strs = textHTML10.split("beyabu_info")
+	var textHTML11 = strs[0]+beyabuInfo+strs[1]
+
+	strs = textHTML11.split("location_img")
+	var textHTML12 = strs[0]+locationImage+strs[1]
+
+	strs = textHTML12.split("location_info")
+	var textHTML13 = strs[0]+locationinfo+strs[1]
+
+	strs = textHTML13.split("cluster_img")
+	var textHTML14 = strs[0]+clusterImage+strs[1]
+
+	strs = textHTML14.split("cluster_info")
+	var textHTML15 = strs[0]+clusterInfo+strs[1]
+
+	strs = textHTML15.split("custom_add1")
+	var textHTML16 = strs[0]+ag1Data+strs[1]
+
+	strs = textHTML16.split("custom_add2")
+	var newtextHTML = strs[0]+ag2Data+strs[1]
 
 	console.log('interior render src: ' + interiorImage);
 

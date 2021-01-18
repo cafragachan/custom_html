@@ -42,7 +42,7 @@
                 font-weight: 500;
                 line-height: 1.2em;
                 color: #ffffff;
-                padding-top: 275px;
+                padding-top: 200px;
                 padding-bottom: 50px;
             }
             p {
@@ -124,6 +124,9 @@
             var interior = "custom_interior";
             var price = "custom_price";
 
+            var roofType = "custom_add1";
+            var terraceType = "custom_add2";
+
             var unit_area = "custom_unit_area"
             var description = "custom_description"
 
@@ -134,6 +137,8 @@
                 document.getElementById("unit_type").innerHTML = "RBU: " + type;
                 document.getElementById("unit_layout").innerHTML = layout;
                 document.getElementById("unit_description").innerHTML = description;
+                document.getElementById("roof_type").innerHTML = roofType;
+                document.getElementById("terrace_type").innerHTML = terraceType;
                // document.getElementById("unit_interior").innerHTML = "Interior: " + interior;
                // document.getElementById("unit_price").innerHTML = "Total Price: " + price;
             }
@@ -179,6 +184,9 @@
                 <p id="unit_type"></p> 
                 <p id="unit_area"></p> 
                 <hr/>
+                <p id="roof_type"></p> 
+                <p id="terrace_type"></p> 
+                <hr/>
                 <p id="unit_layout"></p>
                 <hr/>
                 <p id="unit_description"></p>
@@ -187,7 +195,12 @@
                 <button id="SendCommand" type="button" class="btn btn-light" onclick="SendEmail()">Send Order</button>
 
             </div>
+            <img class="image" src=beyabu_img alt = "image not here">
+            <img class="image" src=beyabu_info alt = "image not here">
+            <img class="image" src=location_img alt = "image not here">
+            <img class="image" src=location_info alt = "image not here">
             <img class="image" src=cluster_img alt = "image not here">
+            <img class="image" src=cluster_info alt = "image not here">
             <img class="image" src=custom_img alt = "image not here">
              <img class="image" src=custom_int_render alt = "image not here">
             <img id="plan" class="image" src=custom_plan alt = "image not here"> 
