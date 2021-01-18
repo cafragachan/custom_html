@@ -332,6 +332,38 @@
 
 
 
+							<ul id="SelectAirRights" class="panel-group" style="display:none">
+								<div id="p_rights">
+									<li><label>
+											<input type="checkbox" class="selectType airRights" name="view" value="view" onclick="UpdateRights();">
+											<img id="img_a_rights" src="images/Rights/right_view.png">
+										</label>
+									</li>
+
+									<li><label>
+											<input type="checkbox" class="selectType airRights" name="top" value="top" onclick="UpdateRights();">
+											<img id="img_b_rights" src="images/Rights/right_up.png">
+										</label>
+									</li>
+
+									<li><label>
+											<input type="checkbox" class="selectType airRights" name="right" value="right" onclick="UpdateRights();">
+											<img id="img_c_rights" src="images/Rights/right_right.png">
+										</label>
+									</li>
+
+									<li><label>
+											<input type="checkbox" class="selectType airRights" name="left" value="left" onclick="UpdateRights();">
+											<img id="img_d_rights" src="images/Rights/right_left.png">
+										</label>
+									</li>
+
+								</div>
+							</ul>
+
+
+
+
 							<ul id="SelectLayout" class="panel-group" style="display:none">
 								<div id="p_layout">
 									<li><label>
@@ -339,7 +371,7 @@
 											<img id="img_a_layout" src="images/SpaceLayout/01_BaseUnit/layout1.png">
 											<span class="large">
 												<div class= "spanContainer">
-													<img id="img_a_layout_large" src="src/base/Plan/1/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+													<img id="img_a_layout_large" src="src/base/Plan/1/floorplan.jpg" class="large-image" alt="Rbu"><br><p>Floorplan A<br><br></p></span>
 												</div>
 										</label>
 									</li>
@@ -349,7 +381,7 @@
 											<img id="img_b_layout" src="images/SpaceLayout/01_BaseUnit/layout2.png">
 											<span class="large">
 												<div class= "spanContainer">
-													<img id="img_b_layout_large" src="src/base/Plan/2/floorplan.jpg" class="large-image" alt="Rbu"><br></span>
+													<img id="img_b_layout_large" src="src/base/Plan/2/floorplan.jpg" class="large-image" alt="Rbu"><br><p>Floorplan B<br><br></p></span>
 												</div>
 										</label>
 									</li>
@@ -425,7 +457,7 @@
 
 
 
-						<div id="right-bar" style="display:flex"></div>
+						<div id="right-bar" style="display:none"></div>
 
 
 
@@ -436,8 +468,8 @@
 									<div id="stats_header" class="stats">
 										<div class="boxStatsHeader">
 											<p id="HeaderStatsName" class="statsText">Name</p><br></br>
-											<p id="HeaderStats" class="statsText">Configuration</p>
-											<p id="HeaderStats" class="statsText">$xxx,xxx.xx</p>
+											<p id="HeaderStats" class="statsText">Configuration</p><br>
+											<p id="priceStats" class="statsText">$0</p>
 										</div>
 									</div>
 								</li></label>
@@ -466,7 +498,42 @@
 										</div>
 										<img id="shop_3_img" class="statsImage" src="images/icons/01_BaseUnit.png">
 									</div>
-								</li></label>							
+								</li></label>	
+
+								
+								<label><li>
+									<div id="shop_7" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="viewRightStats" class="statsText">View Rights</p>
+										</div>
+										<img id="shop_7_img" class="statsImage" src="images/Rights/right_view.png">									
+									</div>
+								<label><li>
+									<div id="shop_8" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="topRightStats" class="statsText">Top Rights</p>
+										</div>
+										<img id="shop_8_img" class="statsImage" src="images/Rights/right_up.png">									
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_9" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="rightRightStats" class="statsText">Expansion Rights</p>
+										</div>
+										<img id="shop_9_img" class="statsImage" src="images/Rights/right_right.png">									
+									</div>
+								</li></label>
+								<label><li>
+									<div id="shop_10" class="stats" style="display: none;">
+										<div class="boxStats">
+											<p id="leftRightStats" class="statsText">Expansion Rights</p>
+										</div>
+										<img id="shop_10_img" class="statsImage" src="images/Rights/right_left.png">									
+									</div>
+								</li></label>
+
+
 								<label><li>
 									<div id="shop_4" class="stats" style="display: none;">
 										<div class="boxStats">

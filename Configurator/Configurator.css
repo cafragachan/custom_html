@@ -600,7 +600,7 @@ display: none;
 
 
 /* HIDE RADIO */
-div li [type=radio] { 
+div li [type=radio], div li [type=checkbox] { 
     position: absolute;
     opacity: 0;
     width: 0;
@@ -608,7 +608,7 @@ div li [type=radio] {
   }
   
   /* IMAGE STYLES */
-  div>li>label>[type=radio] + img {
+  div>li>label>[type=radio] + img,  div>li>label>[type=checkbox] + img {
     float: left;
     cursor: pointer;
     max-width: 60%;
@@ -617,7 +617,7 @@ div li [type=radio] {
   }
   
   /* CHECKED STYLES */
-  div>li>label>[type=radio]:checked + img {
+  div>li>label>[type=radio]:checked + img,  div>li>label>[type=checkbox]:checked + img {
     border-left: 3px solid rgb(255, 0, 140); 
     /* outline: 1px solid rgb(255, 255, 255);  */
     max-width: 90%;

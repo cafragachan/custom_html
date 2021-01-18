@@ -11,6 +11,15 @@ var ag2Type = "";
 var interiorType = "";
 var unitID = "";
 
+var myrights =
+	{
+		view: 'false',
+		top : 'false',
+		right : 'false',
+		left : 'false',
+	};
+
+
 var gameState = "";
 
 var unitSiteAnalysisData = [];
@@ -22,6 +31,19 @@ var nextUnlocked = true;
 var TutorialStep = 0;
 
 var loginModal = document.getElementById("LoginModal");
+
+var totalPrice = 0;
+var unitPrice = 0;
+
+viewNum = 0;
+topNum = 0;
+rightNum = 0;
+leftNum = 0;
+
+var voxelPrice = 93750; //3750 psm * 25
+var airRightsPriceVoxel = 12500; // 500 psm * 25
+var rightsNum = 0;
+
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -147,6 +169,10 @@ function myHandleResponseFunction(data) {
 		UpdateSidebarDisplay(obj.gui);
 
 		if(obj.gui == 'SelectUnit') document.getElementById('next-bar').onclick = null;
+		if(obj.gui == 'SelectAirRights') ClearRights();
+		if(obj.gui == 'SelectLevel') document.getElementById('next-bar').onclick = Next;
+
+		//UpdateShoppingBar();
 	}
 	if('Views' in obj){
 		console.log(Object.keys(obj));
@@ -175,10 +201,19 @@ function myHandleResponseFunction(data) {
 		document.getElementById('next-bar').onclick = Next;
 	}
 
-	// if('instructions' in obj){
-	// 	console.log('ibstructions: ' + obj.instructions);
-	// 	ShowInstructions();
-	// }
+	if('viewNum' in obj){
+
+		if(gameState == 'SelectAirRights'){
+			viewNum = obj.viewNum;
+			topNum = obj.topNum;
+			rightNum = obj.rightNum;
+			leftNum = obj.leftNum;
+		}
+
+		UpdateShoppingBar()
+		//rightsPrice = airRightsPriceVoxel * obj.airRights;
+		console.log('rights price: ' + viewNum);
+	}
 
 	//DownloadOrder();
 }
@@ -544,6 +579,51 @@ function SetGameEstateUI(gameEstate) {
 
 }
 
+
+function UpdateRights(){
+	var airRights = document.querySelectorAll(".airRights");
+
+	let descriptor =
+	{
+		view: 'false',
+		top : 'false',
+		right : 'false',
+		left : 'false',
+	};
+
+	for (let i = 0; i < airRights.length; i++){
+		console.log('value in a: ' + airRights[i])
+		if (airRights[i].checked == true) {
+			if(airRights[i].value == 'view') descriptor.view = 'true'
+			if(airRights[i].value == 'top') descriptor.top = 'true'
+			if(airRights[i].value == 'right') descriptor.right = 'true'
+			if(airRights[i].value == 'left') descriptor.left = 'true'
+			
+		}
+	}
+
+	myrights = descriptor;
+
+	console.log(descriptor)
+	emitUIInteraction(descriptor);
+
+	UpdateShoppingBar();
+}
+
+function ClearRights(){
+	let descriptor =
+	{
+		view: 'false',
+		top : 'false',
+		right : 'false',
+		left : 'false',
+	};
+
+	console.log(descriptor)
+	emitUIInteraction(descriptor);
+}
+
+
 ///GUI
 
 
@@ -592,54 +672,60 @@ function SetStats(id, value_){
 
 	var scrVal = document.getElementById(id).getAttribute("src")
 
-	console.log('source: ' + scrVal);
-	console.log('value:' + value_);
-	console.log('GAMEESTATE: ' + gameState);
-
 	if(gameState == 'SelectCluster'){
 		document.getElementById("shop_1_img").setAttribute("src", scrVal);
 		clusterType = value_;
-		UpdateUIStats();
 	}
 	if(gameState == 'SelectLevel'){
 		document.getElementById("shop_2_img").setAttribute("src", scrVal);
 		levelType = value_;
-		UpdateUIStats();
 	}
 	if(gameState == 'SelectUnit'){
 		document.getElementById("shop_3_img").setAttribute("src", scrVal);
 		// unitType = value_;
-		UpdateUIStats();
+	}
+	if(gameState == 'SelectAirRights'){
+		document.getElementById("shop_7_img").setAttribute("src", scrVal);
+		document.getElementById("shop_8_img").setAttribute("src", scrVal);
+		document.getElementById("shop_9_img").setAttribute("src", scrVal);
+		document.getElementById("shop_10_img").setAttribute("src", scrVal);
 	}
 	if(gameState == 'SelectAddOn1'){
 		document.getElementById("shop_4_img").setAttribute("src", scrVal);
 		ag1Type = value_;
-		UpdateUIStats();
 	}
 	if(gameState == 'SelectAddOn2'){
 		document.getElementById("shop_5_img").setAttribute("src", scrVal);
 		ag2Type = value_;
-		UpdateUIStats();
 	}
 	if(gameState == 'SelectLayout'){
 		document.getElementById("shop_6_img").setAttribute("src", scrVal);
 		layoutType = value_;
-		UpdateUIStats();
 	}
+
+	UpdateShoppingBar();
+	
 }
 
 
 
 function UpdateUIStats(){
-	document.getElementById("HeaderStatsName").innerHTML = playerName;
 
+	document.getElementById("HeaderStatsName").innerHTML = playerName;
 	document.getElementById("clusterStats").innerHTML = clusterType;
 	document.getElementById("levelStats").innerHTML = levelType;
-	document.getElementById("unitStats").innerHTML = unitType;
+	document.getElementById("unitStats").innerHTML = unitType + '<br><br><br>$' + unitPrice;
 	document.getElementById("layoutStats").innerHTML = layoutType;
 	document.getElementById("Ag1Stats").innerHTML = ag1Type;
 	document.getElementById("Ag2Stats").innerHTML = ag2Type;
-	
+
+	document.getElementById("viewRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (viewNum*airRightsPriceVoxel);
+	document.getElementById("topRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (topNum*airRightsPriceVoxel);
+	document.getElementById("leftRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (leftNum*airRightsPriceVoxel);
+	document.getElementById("rightRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (rightNum*airRightsPriceVoxel);
+
+	document.getElementById("priceStats").innerHTML = '$' + totalPrice;
+
 }
 
 function SetLayoutSrc(unitType_) {
@@ -831,6 +917,7 @@ function UpdateSidebarDisplay(gui) {
 		document.getElementById('nav-bar').style.display = 'flex';
 		document.getElementById('back-bar').style.display = 'flex';
 		document.getElementById('next-bar').style.display = 'flex';
+		document.getElementById('right-bar').style.display = 'flex';
 		document.getElementById('shopping-bar').style.display = 'flex';
 	}
 	if(gui == 'Review'){
@@ -838,26 +925,104 @@ function UpdateSidebarDisplay(gui) {
 	}
 }
 
+function UpdatePrice(){
+
+	if (unitType == 'base') {
+		unitPrice = 3 * voxelPrice;	
+	}
+	else if (unitType == 'tall') {
+		unitPrice = 6 * voxelPrice;
+	}
+	else if (unitType == 'wide') {
+		unitPrice = 9 * voxelPrice;
+	}
+	else if (unitType == 'side') {
+		unitPrice = 6 * voxelPrice;
+	}
+	else{
+		unitPrice = 0
+	}
+
+
+	var rightsPrice = 0
+	rightsPrice = (parseInt(viewNum) + parseInt(topNum)  + parseInt(rightNum) + parseInt(leftNum) ) * parseInt(airRightsPriceVoxel);
+
+	console.log('viewNum: ', viewNum);
+	console.log('topNum: ', topNum);
+	console.log('rightNum: ', rightNum);
+	console.log('leftNum: ', leftNum);
+	console.log('rightsPrice: ', rightsPrice);
+
+	totalPrice = unitPrice + rightsPrice;
+}
+
 function UpdateShoppingBar(){
-	console.log("game: " + gameState)
+
+	cluster = document.getElementById("shop_1")
+	level  = document.getElementById("shop_2")
+	unit = document.getElementById("shop_3")
+	airView = document.getElementById("shop_7")
+	airTop = document.getElementById("shop_8")
+	airRight = document.getElementById("shop_9")
+	airLeft = document.getElementById("shop_10")
+	addOn1 = document.getElementById("shop_4")
+	addOn2 = document.getElementById("shop_5")
+	layout = document.getElementById("shop_6")
+
 	if(gameState == 'SelectCluster'){
-		document.getElementById("shop_1").style.display = "block";
+		cluster.style.display = "block";
+		level.style.display = "none";
 	}
 	if(gameState == 'SelectLevel'){
-		document.getElementById("shop_2").style.display = "block";
+		level.style.display = "block";
+		unit.style.display = "none";
+
+		unitType = '';
+
 	}
 	if(gameState == 'SelectUnit'){
-		document.getElementById("shop_3").style.display = "block";
+		unit.style.display = "block";
+		airView.style.display = "none";
+		airTop.style.display = "none";
+		airRight.style.display = "none";
+		airLeft.style.display = "none";
+
+		viewNum = 0;
+		topNum = 0;
+		rightNum = 0;
+		leftNum = 0;
 	}
+
+	if(gameState == 'SelectAirRights'){
+		if(myrights.view == 'true') airView.style.display = "block";
+		else airView.style.display = "none";
+
+		if(myrights.top == 'true') airTop.style.display = "block";
+		else airTop.style.display = "none";
+
+		if(myrights.right == 'true') airRight.style.display = "block";
+		else airRight.style.display = "none";
+
+		if(myrights.left == 'true') airLeft.style.display = "block";
+		else airLeft.style.display = "none";
+
+		addOn1.style.display = "none";
+	}
+
 	if(gameState == 'SelectAddOn1'){
-		document.getElementById("shop_4").style.display = "block";
+		addOn1.style.display = "block";
+		addOn2.style.display = "none";
 	}
 	if(gameState == 'SelectAddOn2'){
-		document.getElementById("shop_5").style.display = "block";
+		addOn2.style.display = "block";
+		layout.style.display = "none";
 	}
 	if(gameState == 'SelectLayout'){
-		document.getElementById("shop_6").style.display = "block";
+		layout.style.display = "block";
 	}
+
+	UpdatePrice();
+	UpdateUIStats();
 	
 }
 
@@ -868,8 +1033,14 @@ function UndoShoppingBar(){
 	if(gameState == 'SelectUnit'){
 		document.getElementById("shop_2").style.display = "none";
 	}
-	if(gameState == 'SelectAddOn1'){
+	if(gameState == 'SelectAirRights'){
 		document.getElementById("shop_3").style.display = "none";
+	}
+	if(gameState == 'SelectAddOn1'){
+		document.getElementById("shop_7").style.display = "none";
+		document.getElementById("shop_8").style.display = "none";
+		document.getElementById("shop_9").style.display = "none";
+		document.getElementById("shop_10").style.display = "none";
 	}
 	if(gameState == 'SelectAddOn2'){
 		document.getElementById("shop_4").style.display = "none";
@@ -880,6 +1051,9 @@ function UndoShoppingBar(){
 	if(gameState == 'Review'){
 		document.getElementById("shop_6").style.display = "none";
 	}
+
+	 UpdatePrice();
+	 UpdateUIStats();
 }
 
 function UndoSystem(){
@@ -893,6 +1067,7 @@ function GUIUncheckAllExcept(index) {
 	var panelIcons = document.querySelectorAll(pans);
 
 	console.log('panel childs: ' + panelIcons.length)
+	
 
 	for (var i in panelIcons) {
 		if(gameState != 'SelectLevel'){
@@ -906,24 +1081,35 @@ function GUIUncheckAllExcept(index) {
 			else panelIcons[i].checked = false;
 		}
 		else{
-			if(clusterType == 'rbu'){
-				if(i == index) {
-					panelIcons[i].checked = true;
-					console.log('wrapper')
-					panelIcons[i].click()
-					console.log('wrapper')
-				}
-				else panelIcons[i].checked = false;
+			// if(clusterType == 'rbu'){
+			// 	if(i == index) {
+			// 		panelIcons[i].checked = true;
+			// 		console.log('wrapper')
+			// 		panelIcons[i].click()
+			// 		console.log('wrapper')
+			// 	}
+			// 	else panelIcons[i].checked = false;
+			// }
+			// else{
+			// 	if(i == 2){
+			// 		panelIcons[i].checked = true;
+			// 		console.log('wrapper')
+			// 		panelIcons[i].click()
+			// 		console.log('wrapper')
+			// 	} 
+			// 	else panelIcons[i].checked = false;
+			// }
+
+
+
+			if(i == 4) {
+				panelIcons[i].checked = true;
+				console.log('wrapper')
+				panelIcons[i].click()
+				console.log('wrapper')
+
 			}
-			else{
-				if(i == 2){
-					panelIcons[i].checked = true;
-					console.log('wrapper')
-					panelIcons[i].click()
-					console.log('wrapper')
-				} 
-				else panelIcons[i].checked = false;
-			}
+			else panelIcons[i].checked = false;
 		}
 		
 	}
@@ -1108,8 +1294,11 @@ function DownloadOrder()
 }
 
 function Next(){
-	onConfigButton('action','yes'); 
-	UpdateShoppingBar();
+	if(gameState != 'Review'){
+		onConfigButton('action','yes'); 
+		// UpdateShoppingBar();
+	}
+	
 }
 
 
