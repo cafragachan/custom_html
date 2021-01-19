@@ -6,17 +6,53 @@
         "LayoutC":"2 Bedroom <br>  1 Bath <br> Kitchenette",
         "addOn1A":"Flat Roof",
         "addOn1B":"Palapa Roof",
-        "addOn2A":"Outdoor Terrace: 7.5 m2",
-        "addOn2B":"Outdoor Terrace: 18 m2",
-        "addOn2C":"Outdoor Terrace: 25 m2",
+        "addOn2A":"Outdoor Terrace: 7.5 m2 / 80.7 sqr ft",
+        "addOn2B":"Outdoor Terrace: 18 m2 / 193.8 sqr ft",
+        "addOn2C":"Outdoor Terrace: 25 m2 / 269 sqr ft",
         "interior":"Zaha Signature Integrated Furniture",
         "description":"The Base kit RBU is crafted to perfection on-site. Integrated spaces and compact areas meet full design efficiency through a digitally manufacturing process. "
 
     },
     "wide":{
+        "unit":"Interior Area: 225 sqr mts / 2421.9 sqr ft",
+        "LayoutA":"3 Bedroom <br> 3 Bath <br> Integrated Kitchen",
+        "LayoutB":"3 Bedroom <br> 3 Bath <br>  Integrated Kitchen",
+        "LayoutC":"2 Bedroom <br>  2 Bath <br> Integrated Kitchen",
+        "addOn1A":"Flat Roof",
+        "addOn1B":"Palapa Roof",
+        "addOn2A":"Outdoor Terrace: 22.5 m2 / 242.9 sqr ft",
+        "addOn2B":"Outdoor Terrace: 54 m2 / 581.3 sqr ft",
+        "addOn2C":"Outdoor Terrace: 75 m2 / 807.3 sqr ft",
+        "interior":"Zaha Signature Integrated Furniture",
+        "description":"The Wide RBU is crafted to perfection on-site. Integrated spaces and spacious living areas meet full design efficiency through a digitally manufacturing process. "
 
     },
     "tall":{
+        "unit":"Interior Area: 150 sqr mts / 1614.6 sqr ft",
+        "LayoutA":"1 Bedroom <br> 1 Bath <br> Kitchen",
+        "LayoutB":"2 Bedroom <br> 1 Bath <br>  Kitchenette",
+        "LayoutC":"2 Bedroom <br>  1 Bath <br> Kitchenette",
+        "addOn1A":"Flat Roof",
+        "addOn1B":"Palapa Roof",
+        "addOn2A":"Outdoor Double Terrace: 7.5 m2 / 80.7 sqr ft",
+        "addOn2B":"Outdoor Double Terrace: 18 m2 / 193.8 sqr ft",
+        "addOn2C":"Outdoor Double Terrace: 25 m2 / 269 sqr ft",
+        "interior":"Zaha Signature Integrated Furniture",
+        "description":"The Tall RBU is crafted to perfection on-site. Integrated spaces and vertical areas meet full design efficiency through a digitally manufacturing process. "
+
+    },
+    "side":{
+        "unit":"Interior Area: 150 sqr mts / 1614.6 sqr ft",
+        "LayoutA":"1 Bedroom <br> 1 Bath <br> Kitchen",
+        "LayoutB":"1 Bedroom <br> 1 Bath <br>  Kitchenette",
+        "LayoutC":"2 Bedroom <br>  1 Bath <br> Kitchenette",
+        "addOn1A":"Flat Roof",
+        "addOn1B":"Palapa Roof",
+        "addOn2A":"Outdoor Terrace: 22.5 m2 / 242.9 sqr ft",
+        "addOn2B":"Outdoor Terrace: 33 m2 / 355.3 sqr ft",
+        "addOn2C":"Outdoor Terrace: 40 m2 / 430.6 sqr ft",
+        "interior":"Zaha Signature Integrated Furniture",
+        "description":"The Side RBU is crafted to perfection on-site. Integrated spaces and outdoor areas meet full design efficiency through a digitally manufacturing process. "
 
     }
 

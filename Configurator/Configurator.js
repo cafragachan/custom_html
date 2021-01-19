@@ -1202,6 +1202,10 @@ function DownloadOrder()
 	var layoutData= "";
 	var ag1Data= "";
 	var ag2Data= "";
+	var viewRight = ""
+	var topRight = ""
+	var rightRight = ""
+	var leftRight = ""
 	
 	var unitAreaData= MarketingJSON.base.unit;
 	var unitDescriptionData= MarketingJSON.base.description;
@@ -1232,33 +1236,27 @@ function DownloadOrder()
 		}
 		else if(layoutType == "LayoutC") {
 			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/3/floorplan.jpg?raw=true";
-			layoutData= MarketingJSON.base.LayoutB;
+			layoutData= MarketingJSON.base.LayoutC;
 		}
 
 		if(ag1Type == 'Flat'){
-			ag1Data= MarketingJSON.base.addOn1_A;
-			console.log('add on json: ' + MarketingJSON.base.addOn1_A);
+			ag1Data= MarketingJSON.base.addOn1A;
 		}
 		else if(ag1Type == 'Palapa'){
-			ag1Data= MarketingJSON.base.addOn1_B;
+			ag1Data= MarketingJSON.base.addOn1B;
 		}
 
 		if(ag2Type == 'Small Terrace'){
-			ag2Data= MarketingJSON.base.addOn2_A;
+			ag2Data= MarketingJSON.base.addOn2A;
 		}
 		else if(ag2Type == 'Medium Terrace'){
-			ag2Data= MarketingJSON.base.addOn2_B;
-			console.log('add on 2 json: ' + MarketingJSON.base.addOn2_B);
+			ag2Data= MarketingJSON.base.addOn2B;
 		}
 		else if(ag2Type == 'Large Terrace'){
-			ag2Data= MarketingJSON.base.addOn2_C;
+			ag2Data= MarketingJSON.base.addOn2C;
 		}
 
-		console.log('ag1Type on 1: ' + ag1Type);
-		console.log('ag2Type on 2: ' + ag2Type);
-
-		console.log('add on 1: ' + ag1Data);
-		console.log('add on 2: ' + ag2Data);
+		
 
 	}
 	if(unitType == "wide"){
@@ -1302,6 +1300,21 @@ function DownloadOrder()
 		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/3/floorplan.jpg?raw=true";
 	}
 
+
+	if(myrights.view == 'true') viewRight = 'Yes'
+	else viewRight = 'No'
+
+	if(myrights.top == 'true') topRight = 'Yes'
+	else topRight = 'No'
+
+	if(myrights.right == 'true') rightRight = 'Yes'
+	else rightRight = 'No'
+
+	if(myrights.left == 'true') leftRight = 'Yes'
+	else leftRight = 'No'
+
+	console.log('top right: ' + myrights.top)
+	console.log('top right: ' + topRight)
 
 
 	////////////////////////
@@ -1352,7 +1365,22 @@ function DownloadOrder()
 	var textHTML16 = strs[0]+ag1Data+strs[1]
 
 	strs = textHTML16.split("custom_add2")
-	var newtextHTML = strs[0]+ag2Data+strs[1]
+	var textHTML17 = strs[0]+ag2Data+strs[1]
+
+	strs = textHTML17.split("custom_level")
+	var textHTML18 = strs[0]+levelType+strs[1]
+
+	strs = textHTML18.split("custom_view")
+	var textHTML19 = strs[0]+viewRight+strs[1]
+
+	strs = textHTML19.split("custom_topRight")
+	var textHTML20 = strs[0]+topRight+strs[1]
+
+	strs = textHTML20.split("custom_right")
+	var textHTML21 = strs[0]+rightRight+strs[1]
+
+	strs = textHTML21.split("custom_left")
+	var newtextHTML = strs[0]+leftRight+strs[1]
 
 	console.log('interior render src: ' + interiorImage);
 

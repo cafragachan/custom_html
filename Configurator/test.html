@@ -42,14 +42,14 @@
                 font-weight: 500;
                 line-height: 1.2em;
                 color: #ffffff;
-                padding-top: 200px;
+                padding-top: 50px;
                 padding-bottom: 50px;
             }
             p {
                 font-family:Verdana,sans-serif;
                 font-size: 0.75em;
                 font-weight: 500;
-                line-height: 1.5em;
+                line-height: 1.25em;
                 margin-right: 25px;
                 text-align: justify;
                 color: #696969;
@@ -124,8 +124,15 @@
             var interior = "custom_interior";
             var price = "custom_price";
 
+            var view = "View: " + "custom_view";
+            var topRight = "Top: " + "custom_topRight";
+            var right = "Right: " + "custom_right";
+            var left = "Left: " + "custom_left";
+
+
             var roofType = "custom_add1";
             var terraceType = "custom_add2";
+            var level = "custom_level";
 
             var unit_area = "custom_unit_area"
             var description = "custom_description"
@@ -133,12 +140,19 @@
             function FillData(){
 
                 document.getElementById("unit_header").innerHTML = "RESIDENCE " + unitNumber;
+                document.getElementById("level_num").innerHTML = level;
                 document.getElementById("unit_area").innerHTML = unit_area;
                 document.getElementById("unit_type").innerHTML = "RBU: " + type;
                 document.getElementById("unit_layout").innerHTML = layout;
                 document.getElementById("unit_description").innerHTML = description;
                 document.getElementById("roof_type").innerHTML = roofType;
                 document.getElementById("terrace_type").innerHTML = terraceType;
+
+                document.getElementById("view_right").innerHTML = view;
+                document.getElementById("top_right").innerHTML = topRight;
+                document.getElementById("right_right").innerHTML = right;
+                document.getElementById("left_right").innerHTML = left;
+
                // document.getElementById("unit_interior").innerHTML = "Interior: " + interior;
                // document.getElementById("unit_price").innerHTML = "Total Price: " + price;
             }
@@ -181,14 +195,25 @@
                 <h3 id="unit_header">RESIDENCE</h3> 
                 
 
+                <p id="level_num"></p> 
                 <p id="unit_type"></p> 
                 <p id="unit_area"></p> 
                 <hr/>
+
+                <p>Air Rights:</p> 
+                <p id="view_right"></p> 
+                <p id="top_right"></p> 
+                <p id="right_right"></p> 
+                <p id="left_right"></p> 
+                <hr/>
+
                 <p id="roof_type"></p> 
                 <p id="terrace_type"></p> 
                 <hr/>
+
                 <p id="unit_layout"></p>
                 <hr/>
+
                 <p id="unit_description"></p>
                 <!-- <p id="unit_interior"></p>
                 <p id="unit_price"></p> -->
