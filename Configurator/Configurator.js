@@ -40,8 +40,10 @@ topNum = 0;
 rightNum = 0;
 leftNum = 0;
 
-var voxelPrice = 93750; //3750 psm * 25
-var airRightsPriceVoxel = 12500; // 500 psm * 25
+//var voxelPrice = 93750; //3750 psm * 25
+var voxelPrice = 25; //3750 psm * 25
+//var airRightsPriceVoxel = 12500; // 500 psm * 25
+var airRightsPriceVoxel = 25; // 500 psm * 25
 var rightsNum = 0;
 
 
@@ -714,7 +716,8 @@ function UpdateUIStats(){
 	document.getElementById("HeaderStatsName").innerHTML = playerName;
 	document.getElementById("clusterStats").innerHTML = clusterType;
 	document.getElementById("levelStats").innerHTML = levelType;
-	document.getElementById("unitStats").innerHTML = unitType + '<br><br><br>$' + unitPrice;
+	//document.getElementById("unitStats").innerHTML = unitType + '<br><br><br>$' + unitPrice;
+	document.getElementById("unitStats").innerHTML = unitType + '<br><br><br>' + unitPrice + 'm2';
 	document.getElementById("layoutStats").innerHTML = layoutType;
 	document.getElementById("Ag1Stats").innerHTML = ag1Type;
 	document.getElementById("Ag2Stats").innerHTML = ag2Type;
@@ -724,7 +727,8 @@ function UpdateUIStats(){
 	document.getElementById("leftRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (leftNum*airRightsPriceVoxel);
 	document.getElementById("rightRightStats").innerHTML = 'Air Rights (View) <br><br><br>' + (rightNum*airRightsPriceVoxel);
 
-	document.getElementById("priceStats").innerHTML = '$' + totalPrice;
+	//document.getElementById("priceStats").innerHTML = '$' + totalPrice;
+	document.getElementById("priceStats").innerHTML = 'Total Area: ' + totalPrice + 'm2';
 
 }
 
@@ -1207,8 +1211,8 @@ function DownloadOrder()
 	var rightRight = ""
 	var leftRight = ""
 	
-	var unitAreaData= MarketingJSON.base.unit;
-	var unitDescriptionData= MarketingJSON.base.description;
+	var unitAreaData= "";
+	var unitDescriptionData= "";
 
 	if(clusterType == "rbu") {
 		clusterImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/rbu/rbu.png?raw=true"
@@ -1223,8 +1227,12 @@ function DownloadOrder()
 
 
 	if(unitType == "base"){
+
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/RBU_Base_Palapa_1.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/InteriorRender.png?raw=true";
+
+		unitAreaData= MarketingJSON.base.unit;
+		unitDescriptionData= MarketingJSON.base.description;
 
 		if(layoutType == "LayoutA"){
 			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/base/Plan/1/floorplan.jpg?raw=true";
@@ -1263,25 +1271,113 @@ function DownloadOrder()
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/RBU_Wide_1.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/InteriorRender.png?raw=true";
 
-		if(layoutType == "LayoutA") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/1/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutB") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/2/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/3/floorplan.jpg?raw=true";
+		unitAreaData= MarketingJSON.wide.unit;
+		unitDescriptionData= MarketingJSON.wide.description;
+
+		if(layoutType == "LayoutA"){
+			 planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/1/floorplan.jpg?raw=true";
+			 layoutData= MarketingJSON.wide.LayoutA;
+		}
+		else if(layoutType == "LayoutB") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/2/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.wide.LayoutB;
+		}
+		else if(layoutType == "LayoutC") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/wide/Plan/3/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.wide.LayoutC;
+		}
+
+		if(ag1Type == 'Flat'){
+			ag1Data= MarketingJSON.wide.addOn1A;
+		}
+		else if(ag1Type == 'Palapa'){
+			ag1Data= MarketingJSON.wide.addOn1B;
+		}
+
+		if(ag2Type == 'Small Terrace'){
+			ag2Data= MarketingJSON.wide.addOn2A;
+		}
+		else if(ag2Type == 'Medium Terrace'){
+			ag2Data= MarketingJSON.wide.addOn2B;
+		}
+		else if(ag2Type == 'Large Terrace'){
+			ag2Data= MarketingJSON.wide.addOn2C;
+		}
 	}
 	if(unitType == "tall"){
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/RBU_Tall_1.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/InteriorRender.png?raw=true";
+
+		unitAreaData= MarketingJSON.tall.unit;
+		unitDescriptionData= MarketingJSON.tall.description;
 		
-		if(layoutType == "LayoutA") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/1/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutB") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/2/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/3/floorplan.jpg?raw=true";
+		if(layoutType == "LayoutA") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/1/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.tall.LayoutA;
+		}
+		else if(layoutType == "LayoutB") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/2/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.tall.LayoutB;
+		}
+		else if(layoutType == "LayoutC") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/tall/Plan/3/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.tall.LayoutC;
+		}
+
+		if(ag1Type == 'Flat'){
+			ag1Data= MarketingJSON.tall.addOn1A;
+		}
+		else if(ag1Type == 'Palapa'){
+			ag1Data= MarketingJSON.tall.addOn1B;
+		}
+
+		if(ag2Type == 'Small Terrace'){
+			ag2Data= MarketingJSON.tall.addOn2A;
+		}
+		else if(ag2Type == 'Medium Terrace'){
+			ag2Data= MarketingJSON.tall.addOn2B;
+		}
+		else if(ag2Type == 'Large Terrace'){
+			ag2Data= MarketingJSON.tall.addOn2C;
+		}
+
 	}
 	if(unitType == "side"){
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/ExteriorRender.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/InteriorRender.png?raw=true";
+
+		unitAreaData= MarketingJSON.side.unit;
+		unitDescriptionData= MarketingJSON.side.description;
 		
-		if(layoutType == "LayoutA") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/1/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutB") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/2/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/3/floorplan.jpg?raw=true";
+		if(layoutType == "LayoutA") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/1/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.side.LayoutA;
+		}
+		else if(layoutType == "LayoutB") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/2/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.side.LayoutA;
+		}
+		else if(layoutType == "LayoutC") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/side/Plan/3/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.side.LayoutA;
+		}
+
+		if(ag1Type == 'Flat'){
+			ag1Data= MarketingJSON.side.addOn1A;
+		}
+		else if(ag1Type == 'Palapa'){
+			ag1Data= MarketingJSON.side.addOn1B;
+		}
+
+		if(ag2Type == 'Small Terrace'){
+			ag2Data= MarketingJSON.side.addOn2A;
+		}
+		else if(ag2Type == 'Medium Terrace'){
+			ag2Data= MarketingJSON.side.addOn2B;
+		}
+		else if(ag2Type == 'Large Terrace'){
+			ag2Data= MarketingJSON.side.addOn2C;
+		}
 	}
 	if(unitType == "villaA"){
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaA/ExteriorRender.png?raw=true";
