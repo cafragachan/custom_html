@@ -741,7 +741,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'base') {
 		img_a.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout2.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout3.png");
+		img_c.setAttribute("src", "images/SpaceLayout/01_BaseUnit/layout1.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/base/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/base/Plan/2/floorplan.jpg");
@@ -749,7 +749,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'tall') {
 		img_a.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout2.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout3.png");
+		img_c.setAttribute("src", "images/SpaceLayout/02_TallUnit/layout1.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/tall/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/tall/Plan/2/floorplan.jpg");
@@ -757,7 +757,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'wide') {
 		img_a.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout2.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout3.png");
+		img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout1.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/wide/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/wide/Plan/2/floorplan.jpg");
@@ -765,7 +765,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'side') {
 		img_a.setAttribute("src", "images/SpaceLayout/04_SideUnit/layout1.png");
 		img_b.setAttribute("src", "images/SpaceLayout/04_SideUnit/layout2.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout3.png");
+		img_c.setAttribute("src", "images/SpaceLayout/03_WideUnit/layout1.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/side/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/side/Plan/2/floorplan.jpg");
@@ -773,7 +773,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'villaA') {
 		img_a.setAttribute("src", "images/SpaceLayout/Villa_O/01.png");
 		img_b.setAttribute("src", "images/SpaceLayout/Villa_O/02.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/Villa_O/03.png");
+		img_c.setAttribute("src", "images/SpaceLayout/Villa_O/01.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/villaA/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/villaA/Plan/2/floorplan.jpg");
@@ -785,7 +785,7 @@ function SetLayoutSrc(unitType_) {
 	if (unitType_ == 'villaB') {
 		img_a.setAttribute("src", "images/SpaceLayout/Villa_T/01.png");
 		img_b.setAttribute("src", "images/SpaceLayout/Villa_T/02.png");
-		//img_c.setAttribute("src", "images/SpaceLayout/Villa_T/03.png");
+		img_c.setAttribute("src", "images/SpaceLayout/Villa_T/01.png");
 
 		document.getElementById('img_a_layout_large').setAttribute("src", "src/villaB/Plan/1/floorplan.jpg");
 		document.getElementById('img_b_layout_large').setAttribute("src", "src/villaB/Plan/2/floorplan.jpg");
@@ -1391,9 +1391,37 @@ function DownloadOrder()
 		renderImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/ExteriorRender.png?raw=true";
 		interiorImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/InteriorRender.png?raw=true";
 		
-		if(layoutType == "LayoutA") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/1/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutB") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/2/floorplan.jpg?raw=true";
-		else if(layoutType == "LayoutC") planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/3/floorplan.jpg?raw=true";
+		if(layoutType == "LayoutA") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/1/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.villaB.LayoutA;
+
+		}
+		else if(layoutType == "LayoutB") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/2/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.villaB.LayoutB;
+
+		}
+		else if(layoutType == "LayoutC") {
+			planImage = "https://github.com/cafragachan/custom_html/blob/master/Configurator/src/villaB/Plan/3/floorplan.jpg?raw=true";
+			layoutData= MarketingJSON.villaB.LayoutC;
+
+		}
+
+		if(ag1Type == 'Flat'){
+			ag1Data= MarketingJSON.villaB.addOn1A;
+		}
+		else if(ag1Type == 'Palapa'){
+			ag1Data= MarketingJSON.villaB.addOn1B;
+		}
+
+		if(ag2Type == 'Small Terrace'){
+			ag2Data= MarketingJSON.villaB.addOn2A;
+		}
+		else if(ag2Type == 'Medium Terrace'){
+			ag2Data= MarketingJSON.villaB.addOn2B;
+		}
+
+
 	}
 
 

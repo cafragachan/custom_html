@@ -386,6 +386,16 @@
 										</label>
 									</li>
 
+									<li><label>
+										<input type="radio" class="selectType" name="layout" value="layoutB" onclick="onConfigButton('layout','3'); SetStats('img_c_layout', 'LayoutC')">
+										<img id="img_c_layout" src="images/SpaceLayout/01_BaseUnit/layout1.png">
+										<span class="large">
+											<div class= "spanContainer">
+												<img id="img_c_layout_large" src="src/base/Plan/1/floorplan.jpg" class="large-image" alt="Rbu"><br><p>Floorplan C<br><br></p></span>
+											</div>
+									</label>
+								</li>
+
 									<!-- <li><label>
 											<input type="radio" class="selectType" name="layout" value="layoutC">
 											<img id="img_c_layout" src="images/SpaceLayout/01_BaseUnit/layout3.png"
@@ -574,12 +584,17 @@
 							
 						
 									<li><label>
-										<input type="radio" name="reviewInteract" value="Interior"><img class="Review-Icon-Interact" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
+										<input type="radio" name="reviewInteract" value="Exterior"><img class="Review-Icon-Interact" src="images/icons/review.png" onclick="onConfigButton('review','exterior')">
 										
 									</label></li>
 									
 									<li><label>
 										<input type="radio"  name="reviewInteract" value="Floorplan"><img class="Review-Icon-Interact" src="images/icons/floorPlanView.png" onclick="onConfigButton('review','floorplan')">
+											
+									</label></li>
+
+									<li><label>
+										<input type="radio"  name="reviewInteract" value="Interior"><img class="Review-Icon-Interact" src="images/icons/interiorView.png" onclick="onConfigButton('review','interior')">
 											
 									</label></li>
 									
